@@ -3,3 +3,11 @@
   get_url:
     dest: '/tmp/cbioportal-seed.sql.gz'
     url: '{{ seed_database }}'
+
+- name: Initialize | Load seed data
+  mysql_db:
+    name: "{{mysql_database_name}}"
+    state: import
+    target: '/tmp/cbioportal-seed.sql.gz'
+    login_user: "{{mysql_database_user}}"
+    login_password: "{{mysql_database_password}}"

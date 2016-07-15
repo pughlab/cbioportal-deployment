@@ -78,6 +78,7 @@
     login_user: root
     login_password: "{{ mysql_root_password }}"
     priv: "{{item}}.*:ALL"
+    append_privs: yes
   with_items:
     - "{{mysql_database_name}}"
     - "{{mysql_test_database_name}}"
