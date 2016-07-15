@@ -10,6 +10,7 @@
   become: true
   roles:
     - { role: database, tags: [ 'database' ] }
+    - { role: initialize, tags: [ 'initialize' ] }
 
 - hosts: application
   become: true

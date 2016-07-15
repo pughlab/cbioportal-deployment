@@ -1,0 +1,5 @@
+---
+- name: Initialize | Download seed data
+  get_url:
+    dest: '/tmp/cbioportal-seed.sql.gz'
+    url: '{{ seed_database }}'
