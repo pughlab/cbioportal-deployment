@@ -3,7 +3,19 @@
   get_url:
     dest: '/tmp/cbioportal-seed.sql.gz'
     url: '{{ seed_database }}'
+  register: seed_downloaded
 
+- name: Initialize | Copy so we can patch
+  command: "mv /tmp/cbioportal-seed.sql.gz /tmp/cbioportal-seed.original.sql.gz"
+  when: seed_downloaded.changed
+
+- name: Initialize | Patch the seed to use InnoDB
+  shell: "gzip -d -c /tmp/cbioportal-seed.original.sql.gz | sed -i -- 's/ENGINE=MyISAM/ENGINE=InnoDB/g' - | gzip -c > /tmp/cbioportal-seed.sql.gz"
+  when: seed_downloaded.changed
+
+- name: Initialize | Remove the original copy
+  command: "rm /tmp/cbioportal-seed.original.sql.gz"
+  when: seed_downloaded.changed
 
 ## Just how many mutations exactly?
 - name: Retrieve stuff from mysql
@@ -15,10 +27,6 @@
   always_run: True
   changed_when: False
 
-- name: echo
-  debug:
-    var: 'cosmic_mutation_count'
-
 ## Don't reload if we have data
 - name: Initialize | Load seed data
   mysql_db:
@@ -27,4 +35,4 @@
     target: '/tmp/cbioportal-seed.sql.gz'
     login_user: "{{mysql_database_user}}"
     login_password: "{{mysql_database_password}}"
-  when: cosmic_mutation_count.stdout == "0"
+  when: cosmic_mutation_count.stdout == "0" and seed_downloaded.changed
