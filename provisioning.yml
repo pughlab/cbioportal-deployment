@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  tasks:
+    - name: 'setup'
+      setup:
+        filter: '*'
+
+- hosts: database
+  become: true
+  roles:
+    - { role: database, tags: [ 'database' ] }
+
+- hosts: application
+  become: true
+  roles:
+    - { role: java, tags: [ 'java' ] }

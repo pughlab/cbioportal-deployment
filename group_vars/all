@@ -1,0 +1,17 @@
+---
+mysql_root_password: 'f3042dfb0da5'
+mysql_database_name: cbioportal
+mysql_database_user: 'cbioportal'
+mysql_database_password: 'cbioportal'
+
+webapp_service_name: 'cbioportal'
+webapp_service_user: '{{webapp_service_name}}'
+
+webapp_directory: '/usr/lib/{{webapp_service_name}}'
+webapp_log_directory: '/var/log/{{webapp_service_name}}'
+webapp_pid_directory: '/var/run/{{webapp_service_name}}'
+
+webapp_service_config: '/etc/default/{{webapp_service_name}}.json'
+webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
+
+seed_database: 'http://cbio.mskcc.org/cancergenomics/public-portal/downloads/cbioportal-seed.sql.gz'

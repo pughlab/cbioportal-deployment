@@ -1,0 +1,84 @@
+---
+- name: MySQL | Set MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password' value='{{ mysql_root_password }}' vtype='password'
+
+- name: MySQL | Re-enter MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{ mysql_root_password }}' vtype='password'
+
+- name: MySQL | Install MySQL
+  apt: name={{ item }} update_cache=yes cache_valid_time=3600 state=present
+  with_items:
+  - python-mysqldb
+  - mysql-server
+
+- name: MySQL | Change the required settings
+  ini_file:
+    dest: "/etc/mysql/my.cnf"
+    section: "{{item.section}}"
+    option: "{{item.key}}"
+    value: "{{item.value}}"
+  with_items:
+    - { key: 'key_buffer_size', section: 'mysqld', value: '4M' }
+    - { key: 'sort_buffer_size', section: 'mysqld', value: '256K' }
+    - { key: 'read_buffer_size', section: 'mysqld', value: '256K' }
+    - { key: 'read_rnd_buffer_size', section: 'mysqld', value: '256K' }
+    - { key: 'net_buffer_length', section: 'mysqld', value: '2K' }
+    - { key: 'bind-address', section: 'mysqld', value: '127.0.0.1' }
+    - { key: 'character-set-server', section: 'mysqld', value: 'utf8' }
+    - { key: 'innodb', section: 'mysqld', value: 'off' }
+    - { key: 'default-storage-engine', section: 'mysqld', value: 'MyISAM' }
+    - { key: 'max_allowed_packet', section: 'mysqld', value: '16M' }
+    - { key: 'thread_stack', section: 'mysqld', value: '128K' }
+    - { key: 'collation-server', section: 'mysqld', value: 'utf8_unicode_ci' }
+    - { key: 'nice', section: 'mysqld_safe', value: '0' }
+    - { key: 'port', section: 'client', value: '3306' }
+    - { key: 'key_buffer', section: 'isamchk', value: '4M' }
+    - { key: 'sort_buffer_size', section: 'isamchk', value: '4M' }
+    - { key: 'key_buffer', section: 'myisamchk', value: '4M' }
+    - { key: 'sort_buffer_size', section: 'myisamchk', value: '4M' }
+
+- name: MySQL | Start the MySQL service
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
+- name: MySQL | Copy initialization file
+  template:
+    src: init.sql.j2
+    dest: /tmp/init.sql
+
+- name: MySQL | Create the database
+  mysql_db:
+    name: "{{mysql_database_name}}"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    encoding: 'utf8'
+    collation: 'utf8_unicode_ci'
+
+- name: MySQL | Initialise the database
+  mysql_db:
+    name: "{{mysql_database_name}}"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+
+- name: MySQL | Add an unprivileged user for the database
+  mysql_user:
+    name: "{{ mysql_database_user }}"
+    host: localhost
+    password: "{{ mysql_database_password }}"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    priv: "{{mysql_database_name}}.*:ALL"
+
+- name: MySQL | Add an unprivileged test user
+  mysql_user:
+    name: "test"
+    host: localhost
+    password: ""
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    priv: "test.*:ALL"
