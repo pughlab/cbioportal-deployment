@@ -3,6 +3,7 @@ mysql_root_password: 'f3042dfb0da5'
 mysql_database_name: cbioportal
 mysql_database_user: 'cbioportal'
 mysql_database_password: 'cbioportal'
+mysql_test_database_name: 'cgds_test'
 
 webapp_service_name: 'cbioportal'
 webapp_service_user: '{{webapp_service_name}}'

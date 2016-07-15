@@ -50,18 +50,24 @@
 
 - name: MySQL | Create the database
   mysql_db:
-    name: "{{mysql_database_name}}"
+    name: "{{item}}"
     login_user: root
     login_password: "{{ mysql_root_password }}"
     encoding: 'utf8'
     collation: 'utf8_unicode_ci'
+  with_items:
+    - "{{mysql_database_name}}"
+    - "{{mysql_test_database_name}}"
 
 - name: MySQL | Initialise the database
   mysql_db:
-    name: "{{mysql_database_name}}"
+    name: "{{item}}"
     state: present
     login_user: root
     login_password: "{{ mysql_root_password }}"
+  with_items:
+    - "{{mysql_database_name}}"
+    - "{{mysql_test_database_name}}"
 
 - name: MySQL | Add an unprivileged user for the database
   mysql_user:
@@ -71,7 +77,10 @@
     state: present
     login_user: root
     login_password: "{{ mysql_root_password }}"
-    priv: "{{mysql_database_name}}.*:ALL"
+    priv: "{{item}}.*:ALL"
+  with_items:
+    - "{{mysql_database_name}}"
+    - "{{mysql_test_database_name}}"
 
 - name: MySQL | Add an unprivileged test user
   mysql_user:
