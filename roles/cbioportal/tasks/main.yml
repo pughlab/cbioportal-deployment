@@ -1,0 +1,19 @@
+---
+- name: cBioPortal | Install git
+  apt: name={{ item }} update_cache=yes cache_valid_time=3600 state=present
+  with_items:
+  - git
+  - maven
+
+- name: cBioPortal | Clone the repository
+  git:
+    repo: "{{cbioportal_repository}}"
+    dest: "/root/cbioportal"
+    version: "{{cbioportal_version}}"
+
+- name: cBioPortal | Copy any files we need to edit
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="/root/cbioportal" creates="/root/cbioportal/{{item.dest}}"
+  with_items:
+    - {src: "src/main/resources/portal.properties.EXAMPLE", dest: "src/main/resources/portal.properties"}
+    - {src: "src/main/resources/portal.properties.EXAMPLE", dest: "portal.properties"}
+    - {src: "src/main/resources/log4j.properties.EXAMPLE", dest: "log4j.properties"}

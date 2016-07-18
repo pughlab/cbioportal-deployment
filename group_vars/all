@@ -5,6 +5,8 @@ mysql_database_user: 'cbioportal'
 mysql_database_password: 'cbioportal'
 mysql_test_database_name: 'cgds_test'
 
+mysql_data_dir: '/var/lib/mysql'
+
 webapp_service_name: 'cbioportal'
 webapp_service_user: '{{webapp_service_name}}'
 
@@ -16,3 +18,5 @@ webapp_service_config: '/etc/default/{{webapp_service_name}}.json'
 webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
 
 seed_database: 'http://cbio.mskcc.org/cancergenomics/public-portal/downloads/cbioportal-seed.sql.gz'
+cbioportal_repository: 'https://github.com/pughlab/cbioportal.git'
+cbioportal_version: 'branded-uhn-deployment'

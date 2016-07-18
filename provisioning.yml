@@ -16,3 +16,4 @@
   become: true
   roles:
     - { role: java, tags: [ 'java' ] }
+    - { role: cbioportal, tags: [ 'cbioportal' ] }
