@@ -25,11 +25,11 @@
     - { key: 'net_buffer_length', section: 'mysqld', value: '2K' }
     - { key: 'bind-address', section: 'mysqld', value: '127.0.0.1' }
     - { key: 'character-set-server', section: 'mysqld', value: 'utf8' }
-    - { key: 'innodb', section: 'mysqld', value: 'off' }
-    - { key: 'default-storage-engine', section: 'mysqld', value: 'MyISAM' }
+    - { key: 'innodb', section: 'mysqld', value: 'on' }
+    - { key: 'default-storage-engine', section: 'mysqld', value: 'InnoDB' }
     - { key: 'max_allowed_packet', section: 'mysqld', value: '16M' }
     - { key: 'thread_stack', section: 'mysqld', value: '128K' }
-    - { key: 'collation-server', section: 'mysqld', value: 'utf8_unicode_ci' }
+    - { key: 'collation-server', section: 'mysqld', value: 'latin1_general_ci' }
     - { key: 'nice', section: 'mysqld_safe', value: '0' }
     - { key: 'port', section: 'client', value: '3306' }
     - { key: 'key_buffer', section: 'isamchk', value: '4M' }
