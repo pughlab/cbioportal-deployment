@@ -35,8 +35,38 @@
 ## Question. Should we run this with idempotence? I'm thinking not, because the
 ## repository might have changed. Best to clean and do a complete build,
 ## at least until we have a better way. That will typically involve using something
-## which doesn't even compile. 
+## which doesn't even compile.
 - name: cBioPortal | Build
   command: >
     env PORTAL_HOME={{build_dir}} mvn clean compile test package -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
     chdir="{{build_dir}}"
+
+## Detecting the version is a little bit complex. We need to evaluate and extract
+## a given string.
+- name: cBioPortal | Detect version in pom.xml
+  shell: >
+    echo 'version=${project.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
+    chdir="{{build_dir}}"
+  register: cbioportal_version
+
+- name: cBioPortal | Create directories
+  command: mkdir -p {{ item.path }} creates={{ item.path }}
+  with_items:
+    - { path: '{{webapp_directory}}' }
+    - { path: '{{webapp_log_directory}}' }
+    - { path: '{{webapp_pid_directory}}' }
+
+- name: cBioPortal | Copy the built portal
+  command: >
+    cp {{build_dir}}/portal/target/cbioportal-{{cbioportal_version.stdout | replace('version=', '')}}.war {{webapp_directory}}
+    creates={{webapp_directory}}/cbioportal-{{cbioportal_version.stdout | replace('version=', '')}}.war
+
+- name: cBioPortal | Download Jetty
+  get_url:
+    dest: '{{jetty_target}}'
+    url: '{{jetty_url}}'
+
+- name: cBioPortal | Copy the built portal.properties file
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
+  with_items:
+    - {src: "portal.properties", dest: "{{webapp_directory}}/portal.properties"}
