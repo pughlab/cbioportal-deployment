@@ -8,18 +8,18 @@
 - name: cBioPortal | Clone the repository
   git:
     repo: "{{cbioportal_repository}}"
-    dest: "/root/cbioportal"
+    dest: "{{build_dir}}"
     version: "{{cbioportal_version}}"
 
 - name: cBioPortal | Copy any files we need to edit
-  command: cp "{{item.src}}" "{{item.dest}}" chdir="/root/cbioportal" creates="/root/cbioportal/{{item.dest}}"
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
   with_items:
     - {src: "src/main/resources/portal.properties.EXAMPLE", dest: "portal.properties"}
     - {src: "src/main/resources/log4j.properties.EXAMPLE", dest: "log4j.properties"}
 
 - name: cBioPortal | Patch portal.properties
   lineinfile:
-    dest: "/root/cbioportal/portal.properties"
+    dest: "{{build_dir}}/portal.properties"
     regexp: '^{{item.key}}\s*=\s*(.*)$'
     line: "{{item.key}}={{item.value}}"
     state: present
@@ -28,9 +28,15 @@
   with_items: "{{portal_settings}}"
 
 - name: cBioPortal | Copy the second portal.properties file
-  command: cp "{{item.src}}" "{{item.dest}}" chdir="/root/cbioportal" creates="/root/cbioportal/{{item.dest}}"
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
   with_items:
     - {src: "portal.properties", dest: "src/main/resources/portal.properties"}
 
+## Question. Should we run this with idempotence? I'm thinking not, because the
+## repository might have changed. Best to clean and do a complete build,
+## at least until we have a better way. That will typically involve using something
+## which doesn't even compile. 
 - name: cBioPortal | Build
-  command: env PORTAL_HOME=/root/cbioportal mvn clean compile chdir="/root/cbioportal"
+  command: >
+    env PORTAL_HOME={{build_dir}} mvn clean compile test package -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
+    chdir="{{build_dir}}"
