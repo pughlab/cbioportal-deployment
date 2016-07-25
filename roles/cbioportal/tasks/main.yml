@@ -14,6 +14,23 @@
 - name: cBioPortal | Copy any files we need to edit
   command: cp "{{item.src}}" "{{item.dest}}" chdir="/root/cbioportal" creates="/root/cbioportal/{{item.dest}}"
   with_items:
-    - {src: "src/main/resources/portal.properties.EXAMPLE", dest: "src/main/resources/portal.properties"}
     - {src: "src/main/resources/portal.properties.EXAMPLE", dest: "portal.properties"}
     - {src: "src/main/resources/log4j.properties.EXAMPLE", dest: "log4j.properties"}
+
+- name: cBioPortal | Patch portal.properties
+  lineinfile:
+    dest: "/root/cbioportal/portal.properties"
+    regexp: '^{{item.key}}\s*=\s*(.*)$'
+    line: "{{item.key}}={{item.value}}"
+    state: present
+    insertafter: EOF
+    backrefs: no
+  with_items: "{{portal_settings}}"
+
+- name: cBioPortal | Copy the second portal.properties file
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="/root/cbioportal" creates="/root/cbioportal/{{item.dest}}"
+  with_items:
+    - {src: "portal.properties", dest: "src/main/resources/portal.properties"}
+
+- name: cBioPortal | Build
+  command: env PORTAL_HOME=/root/cbioportal mvn clean compile chdir="/root/cbioportal"

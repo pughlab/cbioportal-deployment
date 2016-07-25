@@ -6,14 +6,18 @@
       setup:
         filter: '*'
 
-- hosts: database
-  become: true
-  roles:
-    - { role: database, tags: [ 'database' ] }
-    - { role: initialize, tags: [ 'initialize' ] }
-
+# - hosts: database
+#   become: true
+#   roles:
+#     - { role: database, tags: [ 'database' ] }
+#     - { role: initialize, tags: [ 'initialize' ] }
+#   vars_files:
+#     - vars/virtualbox.yml
+#
 - hosts: application
   become: true
   roles:
-    - { role: java, tags: [ 'java' ] }
+    # - { role: java, tags: [ 'java' ] }
     - { role: cbioportal, tags: [ 'cbioportal' ] }
+  vars_files:
+    - vars/virtualbox.yml

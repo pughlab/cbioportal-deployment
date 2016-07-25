@@ -1,0 +1,12 @@
+---
+portal_settings:
+  - key: 'db.user'
+    value: "cbioportal"
+  - key: 'db.password'
+    value: "cbioportal"
+  - key: 'app.name'
+    value: "cBioPortal"
+  - key: 'db.connection_string'
+    value: "jdbc:mysql://localhost/cbioportal"
+  - key: 'mycancergenome.show'
+    value: "false"
