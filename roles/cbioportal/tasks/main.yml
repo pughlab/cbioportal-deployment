@@ -31,18 +31,25 @@
   command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
   with_items:
     - {src: "portal.properties", dest: "src/main/resources/portal.properties"}
+    - {src: "log4j.properties", dest: "src/main/resources/log4j.properties"}
 
 ## Question. Should we run this with idempotence? I'm thinking not, because the
 ## repository might have changed. Best to clean and do a complete build,
 ## at least until we have a better way. That will typically involve using something
 ## which doesn't even compile.
+
 - name: cBioPortal | Build
   command: >
     env PORTAL_HOME={{build_dir}} mvn clean compile test package -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
     chdir="{{build_dir}}"
 
 ## Detecting the version is a little bit complex. We need to evaluate and extract
-## a given string.
+## a given string. This is a sneaky way to do it in Maven. Note that we pipe in and
+## use interactive as that allows us to prefix and therefore detect the version
+## in a huge mess of Maven logging.
+##
+## We'll also need to use a Jinja2 filter to remove the prefix value from here on.
+
 - name: cBioPortal | Detect version in pom.xml
   shell: >
     echo 'version=${project.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
@@ -70,3 +77,12 @@
   command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
   with_items:
     - {src: "portal.properties", dest: "{{webapp_directory}}/portal.properties"}
+    - {src: "log4j.properties", dest: "{{webapp_directory}}/log4j.properties"}
+
+- name: cBioPortal | Write configuration files
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }}
+  notify:
+    - restart service
+  with_items:
+    - { src: "cbioportal.xml.j2", dest: "{{webapp_directory}}/cbioportal.xml", mode: '0755' }
+    - { src: "override-web.xml.j2", dest: "{{webapp_directory}}/override-web.xml", mode: '0755' }
