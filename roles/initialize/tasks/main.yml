@@ -1,8 +1,19 @@
 ---
+## Just how many mutations exactly?
+- name: Initialize | Count current mutations
+  command: >
+    mysql --user={{mysql_database_user}} --password={{mysql_database_password}} {{mysql_database_name}}
+    --host=localhost --batch --skip-column-names
+    --execute="SELECT TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{{mysql_database_name}}' AND TABLE_NAME LIKE 'cosmic_mutation'"
+  register: cosmic_mutation_count
+  always_run: True
+  changed_when: False
+
 - name: Initialize | Download seed data
   get_url:
     dest: '/tmp/cbioportal-seed.sql.gz'
     url: '{{ seed_database }}'
+  when: cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == ""
   register: seed_downloaded
 
 - name: Initialize | Copy so we can patch
@@ -16,16 +27,6 @@
 - name: Initialize | Remove the original copy
   command: "rm /tmp/cbioportal-seed.original.sql.gz"
   when: seed_downloaded.changed
-
-## Just how many mutations exactly?
-- name: Retrieve stuff from mysql
-  command: >
-    mysql --user={{mysql_database_user}} --password={{mysql_database_password}} {{mysql_database_name}}
-    --host=localhost --batch --skip-column-names
-    --execute="SELECT TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{{mysql_database_name}}' AND TABLE_NAME LIKE 'cosmic_mutation'"
-  register: cosmic_mutation_count
-  always_run: True
-  changed_when: False
 
 ## Don't reload if we have data, and if we didn't just download some seed data.
 - name: Initialize | Load seed data
