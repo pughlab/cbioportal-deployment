@@ -86,3 +86,17 @@
   with_items:
     - { src: "cbioportal.xml.j2", dest: "{{webapp_directory}}/cbioportal.xml", mode: '0755' }
     - { src: "override-web.xml.j2", dest: "{{webapp_directory}}/override-web.xml", mode: '0755' }
+    - { src: "cbioportal.init.j2", dest: "/etc/init.d/{{webapp_service_name}}", mode: '0755' }
+
+- name: cBioPortal | Create user
+  user: name={{webapp_service_user}} comment="{{webapp_service_user}} webapp" state=present
+
+- name: cBioPortal | Assign files to the user
+  file: path={{ item.path }} recurse=yes owner={{webapp_service_user}} group=adm mode={{ item.mode }}
+  with_items:
+    - { path: '{{webapp_log_directory}}', mode: '0750' }
+    - { path: '{{webapp_pid_directory}}', mode: '0750' }
+    - { path: '{{webapp_directory}}', mode: '0755' }
+
+- name: cBioPortal | ensure the service is running
+  service: name={{webapp_service_name}} state=restarted enabled=yes

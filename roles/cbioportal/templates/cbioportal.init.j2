@@ -1,0 +1,162 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:             {{webapp_service_name}}
+# Required-Start:       $syslog $remote_fs
+# Required-Stop:        $syslog $remote_fs
+# Should-Start:         $local_fs
+# Should-Stop:          $local_fs
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    {{webapp_service_name}} web application
+# Description:          {{webapp_service_name}} web application
+### END INIT INFO
+
+###
+# chkconfig: 345 20 80
+# description: cBioPortal
+# processname: java
+#
+# Installation (CentOS):
+# copy file to /etc/init.d
+# chmod +x /etc/init.d/{{webapp_service_name}}
+# chkconfig --add /etc/init.d/{{webapp_service_name}}
+# chkconfig {{webapp_service_name}} on
+#
+# Installation (Ubuntu):
+# copy file to /etc/init.d
+# chmod +x /etc/init.d/{{webapp_service_name}}
+# update-rc.d {{webapp_service_name}} defaults
+#
+#
+# Usage: (as root)
+# service {{webapp_service_name}} start
+# service {{webapp_service_name}} stop
+# service {{webapp_service_name}} status
+#
+###
+
+# The directory in which your application is installed
+APPLICATION_DIR="{{webapp_directory}}"
+# The fat jar containing your application
+APPLICATION_JAR="{{jetty_target}}"
+# The application argument such as -cluster -cluster-host ...
+APPLICATION_ARGS="cbioportal.xml"
+# cBioPortal options and system properties (-Dfoo=bar).
+CBIOPORTAL_OPTS=""
+# cBioPortal home
+PORTAL_HOME="{{webapp_directory}}"
+# Java
+JAVA=java
+
+# ***********************************************
+OUT_FILE={{webapp_log_directory}}/out.log
+RUNNING_PID={{webapp_pid_directory}}/cbioportal.pid
+# ***********************************************
+
+## Create the {{webapp_pid_directory}} dir if necessary
+## This is because /var/run on some systems is removed on
+## boot, so the directory for the pid file might not exist.
+
+if [ ! -d {{webapp_pid_directory}} ]; then
+    mkdir {{webapp_pid_directory}}
+    chmod 0755 {{webapp_pid_directory}}
+    chown {{webapp_service_user}} {{webapp_pid_directory}}
+fi
+
+# colors
+red='\e[0;31m'
+green='\e[0;32m'
+yellow='\e[0;33m'
+reset='\e[0m'
+
+echoRed() { echo -e "${red}$1${reset}"; }
+echoGreen() { echo -e "${green}$1${reset}"; }
+echoYellow() { echo -e "${yellow}$1${reset}"; }
+
+# Check whether the application is running.
+# The check is pretty simple: open a running pid file and check that the process
+# is alive.
+isrunning() {
+  # Check for running app
+  if [ -f "$RUNNING_PID" ]; then
+    proc=$(cat $RUNNING_PID);
+    if /bin/ps --pid $proc 1>&2 >/dev/null;
+    then
+      return 0
+    fi
+  fi
+  return 1
+}
+
+start() {
+  if isrunning; then
+    echoYellow "cBioPortal is already running"
+    return 0
+  fi
+
+  pushd $APPLICATION_DIR > /dev/null
+  nohup $JAVA $CBIOPORTAL_OPTS -jar $APPLICATION_JAR $APPLICATION_ARGS > $OUT_FILE 2>&1 &
+  echo $! > ${RUNNING_PID}
+  popd > /dev/null
+
+  if isrunning; then
+    echoGreen "cBioPortal started"
+    exit 0
+  else
+    echoRed "cBioPortal has not started - check log"
+    exit 3
+  fi
+}
+
+restart() {
+  echo "Restarting cBioPortal"
+  stop
+  start
+}
+
+stop() {
+  echoYellow "Stopping cBioPortal"
+  if isrunning; then
+    kill `cat $RUNNING_PID`
+    rm $RUNNING_PID
+  fi
+}
+
+status() {
+  if isrunning; then
+    echoGreen "cBioPortal is running"
+  else
+    echoRed "cBioPortal is either stopped or inaccessible"
+  fi
+}
+
+case "$1" in
+start)
+    start
+;;
+
+status)
+   status
+   exit 0
+;;
+
+stop)
+    if isrunning; then
+	stop
+	exit 0
+    else
+	echoRed "cBioPortal not running"
+	exit 3
+    fi
+;;
+
+restart)
+    stop
+    start
+;;
+
+*)
+    echo "Usage: $0 {status|start|stop|restart}"
+    exit 1
+esac
