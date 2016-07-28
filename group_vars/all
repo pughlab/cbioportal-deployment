@@ -24,6 +24,7 @@ webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
 seed_database: 'http://cbio.mskcc.org/cancergenomics/public-portal/downloads/cbioportal-seed.sql.gz'
 cbioportal_repository: 'https://github.com/pughlab/cbioportal.git'
 cbioportal_version: 'debloating-lite'
+cbioportal_build_options: '-DskipTests'
 
 jetty_url: 'https://repo1.maven.org/maven2/ca/uhnresearch/pughlab/java-server/1.0.3/java-server-1.0.3.jar'
 jetty_target: '{{webapp_directory}}/java-server.jar'

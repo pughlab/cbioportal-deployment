@@ -40,7 +40,7 @@
 
 - name: cBioPortal | Build
   command: >
-    env PORTAL_HOME={{build_dir}} mvn clean compile test package -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
+    env PORTAL_HOME={{build_dir}} mvn {{cbioportal_build_options}} clean compile test package -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
     chdir="{{build_dir}}"
 
 ## Detecting the version is a little bit complex. We need to evaluate and extract
