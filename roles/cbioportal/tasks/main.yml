@@ -67,6 +67,14 @@
   command: >
     cp {{build_dir}}/portal/target/cbioportal-{{cbioportal_version.stdout | replace('version=', '')}}.war {{webapp_directory}}
 
+- name: cBioPortal | Copy the built scripts runner
+  command: >
+    cp {{build_dir}}/scripts/target/scripts-{{cbioportal_version.stdout | replace('version=', '')}}.jar {{webapp_directory}}
+
+- name: cBioPortal | Copy the version into a stored file
+  shell: >
+    echo "{{cbioportal_version.stdout | replace('version=', '')}}" > {{webapp_directory}}/version
+
 - name: cBioPortal | Download Jetty
   get_url:
     dest: '{{jetty_target}}'
