@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  tasks:
+    - name: 'setup'
+      setup:
+        filter: '*'
+
+- hosts: all
+  tasks:
+    - name: Local variables
+      include_vars: "{{ item }}"
+      with_first_found:
+        - "vars/local_config_{{app_layout}}.yml"
+        - "vars/{{ansible_os_family|lower}}.yml"
+        - "vars/defaults.yml"
+
+- hosts: application
+  become: true
+  roles:
+    - { role: import, tags: [ 'import' ] }

@@ -1,0 +1,6 @@
+---
+
+- name: cBioPortal import
+  shell: >
+    env PORTAL_HOME={{webapp_directory}} java -jar scripts-`cat version`.jar
+    chdir="{{webapp_directory}}"
