@@ -31,5 +31,5 @@ cbioportal_build_options: '-DskipTests'
 jetty_url: 'https://repo1.maven.org/maven2/ca/uhnresearch/pughlab/java-server/1.0.3/java-server-1.0.3.jar'
 jetty_target: '{{webapp_directory}}/java-server.jar'
 
-import_directory: ''
+import_directory: 'cbioportal_import'
 remote_staging: '/tmp/staging'

@@ -1,7 +1,8 @@
 ---
 
 - name: cBioPortal import | get absolute import directory
-  local_action: shell cd ~/{{import_directory}} && pwd
+  local_action: command bash -c "cd ~/{{import_directory}} && pwd"
+  become: false
   register: local_import_directory
 
 - name: cBioPortal import | clear out old import data
@@ -12,6 +13,7 @@
 - name: cBioPortal import | clear out old import data
   command: rm -rf "{{remote_staging}}/*"
 
+# We might fail here if we don't have a directory of data
 - name: cBioPortal import | copy over staging data
   copy:
     src: "{{local_import_directory.stdout}}/"
