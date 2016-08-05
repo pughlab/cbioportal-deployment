@@ -1,6 +1,23 @@
 ---
 
-- name: cBioPortal import
+- name: cBioPortal import | get absolute import directory
+  local_action: shell cd ~/{{import_directory}} && pwd
+  register: local_import_directory
+
+- name: cBioPortal import | clear out old import data
+  file:
+    state: directory
+    path: "{{remote_staging}}"
+
+- name: cBioPortal import | clear out old import data
+  command: rm -rf "{{remote_staging}}/*"
+
+- name: cBioPortal import | copy over staging data
+  copy:
+    src: "{{local_import_directory.stdout}}/"
+    dest: "{{remote_staging}}/"
+
+- name: cBioPortal import | import the data
   shell: >
     env PORTAL_HOME={{webapp_directory}} java -jar scripts-`cat version`.jar
     chdir="{{webapp_directory}}"
