@@ -1,4 +1,6 @@
 ---
+app_profile: 'default'
+
 mysql_root_password: 'f3042dfb0da5'
 mysql_database_host: 'localhost'
 mysql_database_port: '3306'

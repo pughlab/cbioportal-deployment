@@ -11,7 +11,7 @@
     - name: Local variables
       include_vars: "{{ item }}"
       with_first_found:
-        - "vars/local_config_{{app_layout}}.yml"
+        - "vars/local_config_{{app_profile}}.yml"
         - "vars/{{ansible_os_family|lower}}.yml"
         - "vars/defaults.yml"
 
