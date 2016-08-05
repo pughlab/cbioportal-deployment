@@ -92,6 +92,7 @@
     - restart service
   with_items:
     - { src: "cbioportal.xml.j2", dest: "{{webapp_directory}}/cbioportal.xml", mode: '0755' }
+    - { src: "cbioportal-import.xml.j2", dest: "{{webapp_directory}}/cbioportal-import.xml", mode: '0755' }
     - { src: "override-web.xml.j2", dest: "{{webapp_directory}}/override-web.xml", mode: '0755' }
     - { src: "cbioportal.init.j2", dest: "/etc/init.d/{{webapp_service_name}}", mode: '0755' }
 
