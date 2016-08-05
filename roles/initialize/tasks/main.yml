@@ -13,6 +13,7 @@
   get_url:
     dest: '/tmp/cbioportal-seed.sql.gz'
     url: '{{ seed_database }}'
+    timeout: 600
   when: cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == ""
   register: seed_downloaded
 
