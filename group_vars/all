@@ -12,6 +12,8 @@ mysql_test_database_name: 'cgds_test'
 mysql_data_dir: '/var/lib/mysql'
 
 build_dir: '/root/cbioportal'
+build_overlay_dir: '/root/cbioportal-overlay'
+build_importer_dir: '/root/cbioportal-importer'
 
 webapp_service_name: 'cbioportal'
 webapp_service_user: '{{webapp_service_name}}'
@@ -25,7 +27,11 @@ webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
 
 seed_database: 'http://cbio.mskcc.org/cancergenomics/public-portal/downloads/cbioportal-seed.sql.gz'
 cbioportal_repository: 'https://github.com/pughlab/cbioportal.git'
+cbioportal_overlay_repository: 'https://github.com/pughlab/cbioportal-octane-overlay.git'
+cbioportal_importer_repository: 'https://github.com/pughlab/cbioportal-importer.git'
 cbioportal_version: 'debloating-lite'
+cbioportal_overlay_version: 'develop'
+cbioportal_importer_version: 'develop'
 cbioportal_build_options: '-DskipTests'
 
 jetty_url: 'https://repo1.maven.org/maven2/ca/uhnresearch/pughlab/java-server/1.0.3/java-server-1.0.3.jar'

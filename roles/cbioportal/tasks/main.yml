@@ -11,6 +11,18 @@
     dest: "{{build_dir}}"
     version: "{{cbioportal_version}}"
 
+- name: cBioPortal | Clone the overlay repository
+  git:
+    repo: "{{cbioportal_overlay_repository}}"
+    dest: "{{build_overlay_dir}}"
+    version: "{{cbioportal_overlay_version}}"
+
+- name: cBioPortal | Clone the importer repository
+  git:
+    repo: "{{cbioportal_importer_repository}}"
+    dest: "{{build_importer_dir}}"
+    version: "{{cbioportal_importer_version}}"
+
 - name: cBioPortal | Copy any files we need to edit
   command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
   with_items:
@@ -38,9 +50,9 @@
 ## at least until we have a better way. That will typically involve using something
 ## which doesn't even compile.
 
-- name: cBioPortal | Build
+- name: cBioPortal | Build cBioPortal
   command: >
-    env PORTAL_HOME={{build_dir}} mvn {{cbioportal_build_options}} clean compile test package -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
+    env PORTAL_HOME={{build_dir}} mvn {{cbioportal_build_options}} clean compile test package install -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
     chdir="{{build_dir}}"
 
 ## Detecting the version is a little bit complex. We need to evaluate and extract
@@ -56,6 +68,40 @@
     chdir="{{build_dir}}"
   register: cbioportal_version
 
+- name: cBioPortal | Copy the cBioPortal version into a stored file
+  shell: >
+    echo "{{cbioportal_version.stdout | replace('version=', '')}}" > {{webapp_directory}}/version
+
+- name: cBioPortal | Build cBioPortal importer
+  command: >
+    mvn clean compile test package install
+    chdir="{{build_importer_dir}}"
+
+- name: cBioPortal | Detect version in pom.xml
+  shell: >
+    echo 'version=${project.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
+    chdir="{{build_importer_dir}}"
+  register: cbioportal_importer_version
+
+- name: cBioPortal | Copy the importer version into a stored file
+  shell: >
+    echo "{{cbioportal_importer_version.stdout | replace('version=', '')}}" > {{webapp_directory}}/importer-version
+
+- name: cBioPortal | Build cBioPortal overlay
+  command: >
+    mvn clean compile test package install
+    chdir="{{build_overlay_dir}}"
+
+- name: cBioPortal | Detect version in pom.xml
+  shell: >
+    echo 'version=${project.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
+    chdir="{{build_overlay_dir}}"
+  register: cbioportal_overlay_version
+
+- name: cBioPortal | Copy the overlay version into a stored file
+  shell: >
+    echo "{{cbioportal_overlay_version.stdout | replace('version=', '')}}" > {{webapp_directory}}/overlay-version
+
 - name: cBioPortal | Create directories
   command: mkdir -p {{ item.path }} creates={{ item.path }}
   with_items:
@@ -67,11 +113,15 @@
   command: >
     cp {{build_dir}}/portal/target/cbioportal-{{cbioportal_version.stdout | replace('version=', '')}}.war {{webapp_directory}}
 
-- name: cBioPortal | Copy the built scripts runner
+- name: cBioPortal | Copy the built scripts jar
   command: >
     cp {{build_dir}}/scripts/target/scripts-{{cbioportal_version.stdout | replace('version=', '')}}.jar {{webapp_directory}}
 
-- name: cBioPortal | Copy the version into a stored file
+- name: cBioPortal | Copy the built runner executable
+  command: >
+    cp {{build_importer_dir}}/target/cbioportal-importer-{{cbioportal_importer_version.stdout | replace('version=', '')}}.jar {{webapp_directory}}
+
+- name: cBioPortal | Copy the cBioPortal version into a stored file
   shell: >
     echo "{{cbioportal_version.stdout | replace('version=', '')}}" > {{webapp_directory}}/version
 
