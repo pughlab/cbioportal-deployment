@@ -16,5 +16,5 @@
 
 - name: cBioPortal import | import the data
   shell: >
-    env PORTAL_HOME={{webapp_directory}} java -cp scripts-`cat version`.jar -jar cbioportal-importer-`cat importer-version`.jar cbioportal-import.xml {{remote_staging}}
+    env PORTAL_HOME={{webapp_directory}} java -cp scripts-`cat version`.jar -jar cbioportal-importer-`cat importer-version`.jar {{remote_staging}} cbioportal-import.xml
     chdir="{{webapp_directory}}"
