@@ -69,6 +69,17 @@
     - "{{mysql_database_name}}"
     - "{{mysql_test_database_name}}"
 
+- name: MySQL | Initialise the database
+  mysql_db:
+    name: "{{item}}"
+    state: import
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    target: "/tmp/init.sql"
+  with_items:
+    - "{{mysql_database_name}}"
+    - "{{mysql_test_database_name}}"
+
 - name: MySQL | Add an unprivileged user for the database
   mysql_user:
     name: "{{ mysql_database_user }}"
