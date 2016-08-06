@@ -25,7 +25,7 @@ webapp_pid_directory: '/var/run/{{webapp_service_name}}'
 webapp_service_config: '/etc/default/{{webapp_service_name}}.json'
 webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
 
-seed_database: 'http://cbio.mskcc.org/cancergenomics/public-portal/downloads/cbioportal-seed.sql.gz'
+seed_database: 'https://storage.googleapis.com/cbiostorage-1/cbioportal-seed.sql.gz'
 cbioportal_repository: 'https://github.com/pughlab/cbioportal.git'
 cbioportal_overlay_repository: 'https://github.com/pughlab/cbioportal-octane-overlay.git'
 cbioportal_importer_repository: 'https://github.com/pughlab/cbioportal-importer.git'
