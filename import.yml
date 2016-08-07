@@ -1,12 +1,14 @@
 ---
+## The command is then:
+## ansible-playbook -vv -i oicr-inventory.ini --connection=ssh --become-method=sudo --extra-vars=import_directory=/... import.yml
 
-- hosts: all
+- hosts: application
   tasks:
     - name: 'setup'
       setup:
         filter: '*'
 
-- hosts: all
+- hosts: application
   tasks:
     - name: Local variables
       include_vars: "{{ item }}"
