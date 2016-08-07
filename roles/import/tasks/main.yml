@@ -1,5 +1,4 @@
 ---
-
 - name: cBioPortal import | clear out old import data
   file:
     state: directory
@@ -18,3 +17,6 @@
   shell: >
     env PORTAL_HOME={{webapp_directory}} java -cp scripts-`cat version`.jar -jar cbioportal-importer-`cat importer-version`.jar {{remote_staging}} cbioportal-import.xml
     chdir="{{webapp_directory}}"
+
+- name: cBioPortal import | restart the web application
+  service: name={{webapp_service_name}} state=restarted enabled=yes
