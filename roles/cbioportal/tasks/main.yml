@@ -148,8 +148,8 @@
     - { src: "cbioportal.init.j2", dest: "/etc/init.d/{{webapp_service_name}}", mode: '0755' }
 
 - name: cBioPortal | Update the database schema
-  command: >
-     python {{build_dir}}/core/src/main/scripts/migrate_db.py -p {{webapp_directory}}/portal.properties -s {{build_dir}}/core/src/main/resources/db/migration.sql
+  shell: >
+     yes | python {{build_dir}}/core/src/main/scripts/migrate_db.py -p {{webapp_directory}}/portal.properties -s {{build_dir}}/core/src/main/resources/db/migration.sql
 
 - name: cBioPortal | Create user
   user: name={{webapp_service_user}} comment="{{webapp_service_user}} webapp" state=present
