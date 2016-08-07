@@ -69,6 +69,12 @@
     chdir="{{build_dir}}"
   register: cbioportal_version
 
+- name: cBioPortal | Detect db.version in pom.xml
+  shell: >
+    echo 'version=${db.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
+    chdir="{{build_dir}}"
+  register: cbioportal_db_version
+
 - name: cBioPortal | Copy the cBioPortal version into a stored file
   shell: >
     echo "{{cbioportal_version.stdout | replace('version=', '')}}" > {{webapp_directory}}/version
