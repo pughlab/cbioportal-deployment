@@ -23,7 +23,7 @@
     - { key: 'read_buffer_size', section: 'mysqld', value: '256K' }
     - { key: 'read_rnd_buffer_size', section: 'mysqld', value: '256K' }
     - { key: 'net_buffer_length', section: 'mysqld', value: '2K' }
-    - { key: 'bind-address', section: 'mysqld', value: '127.0.0.1' }
+    - { key: 'bind-address', section: 'mysqld', value: '0.0.0.0' }
     - { key: 'character-set-server', section: 'mysqld', value: 'utf8' }
     - { key: 'innodb', section: 'mysqld', value: 'on' }
     - { key: 'default-storage-engine', section: 'mysqld', value: 'InnoDB' }
@@ -83,8 +83,8 @@
 - name: MySQL | Add an unprivileged user for the database
   mysql_user:
     name: "{{ mysql_database_user }}"
-    host: localhost
     password: "{{ mysql_database_password }}"
+    host: "{{ mysql_application_host }}"
     state: present
     login_user: root
     login_password: "{{ mysql_root_password }}"
