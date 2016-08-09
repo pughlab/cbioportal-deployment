@@ -1,11 +1,11 @@
 ---
 - name: cBioPortal import | clear out old import data
+  command: rm -rf "{{remote_staging}}"
+
+- name: cBioPortal import | clear out old import data
   file:
     state: directory
     path: "{{remote_staging}}"
-
-- name: cBioPortal import | clear out old import data
-  command: rm -rf "{{remote_staging}}/*"
 
 # We might fail here if we don't have a directory of data
 - name: cBioPortal import | copy over staging data
