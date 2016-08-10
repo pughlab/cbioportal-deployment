@@ -18,23 +18,25 @@
     option: "{{item.key}}"
     value: "{{item.value}}"
   with_items:
-    - { key: 'key_buffer_size', section: 'mysqld', value: '4M' }
-    - { key: 'sort_buffer_size', section: 'mysqld', value: '256K' }
-    - { key: 'read_buffer_size', section: 'mysqld', value: '256K' }
-    - { key: 'read_rnd_buffer_size', section: 'mysqld', value: '256K' }
+    - { key: 'key_buffer_size', section: 'mysqld', value: '128M' }
+    - { key: 'sort_buffer_size', section: 'mysqld', value: '4M' }
+    - { key: 'read_buffer_size', section: 'mysqld', value: '4M' }
+    - { key: 'read_rnd_buffer_size', section: 'mysqld', value: '1M' }
     - { key: 'net_buffer_length', section: 'mysqld', value: '2K' }
     - { key: 'bind-address', section: 'mysqld', value: '0.0.0.0' }
     - { key: 'character-set-server', section: 'mysqld', value: 'utf8' }
     - { key: 'innodb', section: 'mysqld', value: 'on' }
     - { key: 'default-storage-engine', section: 'mysqld', value: 'InnoDB' }
+    - { key: 'innodb_buffer_pool_size', section: 'mysqld', value: '2G' }
+    - { key: 'innodb_log_file_size', section: 'mysqld', value: '512M' }
     - { key: 'max_allowed_packet', section: 'mysqld', value: '16M' }
-    - { key: 'thread_stack', section: 'mysqld', value: '128K' }
+    - { key: 'thread_stack', section: 'mysqld', value: '256K' }
     - { key: 'collation-server', section: 'mysqld', value: 'utf8_general_ci' }
     - { key: 'nice', section: 'mysqld_safe', value: '0' }
     - { key: 'port', section: 'client', value: '3306' }
-    - { key: 'key_buffer', section: 'isamchk', value: '4M' }
+    - { key: 'key_buffer', section: 'isamchk', value: '128M' }
     - { key: 'sort_buffer_size', section: 'isamchk', value: '4M' }
-    - { key: 'key_buffer', section: 'myisamchk', value: '4M' }
+    - { key: 'key_buffer', section: 'myisamchk', value: '128M' }
     - { key: 'sort_buffer_size', section: 'myisamchk', value: '4M' }
 
 - name: MySQL | Start the MySQL service
