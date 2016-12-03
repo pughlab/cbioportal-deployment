@@ -1,0 +1,13 @@
+---
+## Additional and optional role to embed the OpenID Connect Provider into
+## the application framework. This requires downloading an additional war
+## and a decently large number of configuration changes involving embedding
+## XML. We probably want to use the https://github.com/cmprescott/ansible-xml
+## component to manage some of this, because we don't want to do too much
+## XML mangling at the text level.
+
+- name: OIDC | Download web application
+  get_url:
+    dest: '{{ webapp_directory }}/openid-connect-server.war'
+    url: '{{ oidc_url }}'
+    timeout: 600

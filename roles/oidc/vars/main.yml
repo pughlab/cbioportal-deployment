@@ -1,0 +1,5 @@
+---
+oidc_repository: 'https://github.com/morungos/openid-connect-server'
+oidc_version: '1.0.2'
+oidc_release: '{{oidc_repository}}/releases/download/{{oidc_version}}'
+oidc_url: '{{oidc_release}}/openid-connect-server-{{oidc_version}}.war'
