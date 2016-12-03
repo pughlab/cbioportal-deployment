@@ -11,3 +11,36 @@
     dest: '{{ webapp_directory }}/openid-connect-server.war'
     url: '{{ oidc_url }}'
     timeout: 600
+
+
+- name: OIDC | Create the database
+  mysql_db:
+    name: "{{item}}"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    encoding: 'utf8'
+    collation: 'utf8_unicode_ci'
+  with_items:
+    - "{{oidc_database_name}}"
+
+- name: OIDC | Initialise the database
+  mysql_db:
+    name: "{{item}}"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+  with_items:
+    - "{{oidc_database_name}}"
+
+- name: OIDC | Add an unprivileged user for the database
+  mysql_user:
+    name: "{{ oidc_database_user }}"
+    password: "{{ oidc_database_password }}"
+    host: "{{ oidc_application_host }}"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    priv: "{{item}}.*:ALL"
+    append_privs: yes
+  with_items:
+    - "{{oidc_database_name}}"
