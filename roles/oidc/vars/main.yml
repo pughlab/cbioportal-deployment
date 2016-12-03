@@ -3,3 +3,9 @@ oidc_repository: 'https://github.com/morungos/openid-connect-server'
 oidc_version: '1.0.2'
 oidc_release: '{{oidc_repository}}/releases/download/{{oidc_version}}'
 oidc_url: '{{oidc_release}}/openid-connect-server-{{oidc_version}}.war'
+
+oidc_database_host: 'localhost'
+oidc_database_port: 3306
+oidc_database_name: 'oidc'
+oidc_database_username: 'oidc'
+oidc_database_password: 'oidc'

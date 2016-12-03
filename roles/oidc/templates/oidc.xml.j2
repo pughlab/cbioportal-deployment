@@ -1,0 +1,75 @@
+<New id="webappOidc" class="org.eclipse.jetty.webapp.WebAppContext">
+
+  <Set name="overrideDescriptor">file://{{webapp_directory}}/override-web-oidc.xml</Set>
+
+  <Set name="contextPath">/oidc</Set>
+
+  <!-- The scratch directory -->
+
+  <New id="scratchDirOidc" class="java.io.File">
+    <Arg><Ref refid="tempDir"/></Arg>
+    <Arg type="java.lang.String">embedded-jetty-jsp-oidc</Arg>
+    <Call name="mkdirs"></Call>
+  </New>
+
+  <Call name="setAttribute">
+    <Arg>javax.servlet.context.tempdir</Arg>
+    <Arg><Ref refid="scratchDirOidc" /></Arg>
+  </Call>
+
+  <Call name="setInitParameter">
+          <Arg>spring.profiles.active</Arg>
+          <Arg type="java.lang.String">default,mysql</Arg>
+      </Call>
+
+  <Call name="setAttribute">
+    <Arg>org.apache.tomcat.InstanceManager</Arg>
+    <Arg><New class="org.apache.tomcat.SimpleInstanceManager" /></Arg>
+  </Call>
+
+  <Call name="addBean">
+    <Arg>
+      <New class="org.eclipse.jetty.annotations.ServletContainerInitializersStarter">
+        <Arg><Ref refid="webappOidc" /></Arg>
+      </New>
+    </Arg>
+    <Arg type="boolean">true</Arg>
+  </Call>
+
+  <!-- Set the resource base -->
+  <Call name="setWar">
+    <Arg>{{webapp_directory}}/openid-connect-server-{{oidc_version}}.war</Arg>
+  </Call>
+
+  <Call name="setAttribute">
+    <Arg>org.eclipse.jetty.containerInitializers</Arg>
+    <Arg>
+      <New class="java.util.ArrayList">
+          <Call name="add">
+            <Arg>
+                <New class="org.eclipse.jetty.plus.annotation.ContainerInitializer">
+                <Arg><New class="org.eclipse.jetty.apache.jsp.JettyJasperInitializer"></New></Arg>
+                <Arg><Array type="java.lang.Class"></Array></Arg>
+              </New>
+            </Arg>
+          </Call>
+        </New>
+    </Arg>
+  </Call>
+
+    <!-- The data source -->
+    <New id="dsOidc" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg><Ref refid="webapp"/></Arg>
+        <Arg>jdbc/OIDC</Arg>
+        <Arg>
+            <New class="org.apache.commons.dbcp.BasicDataSource">
+                  <Set name="driverClassName">com.mysql.jdbc.Driver</Set>
+                  <Set name="url">jdbc:mysql://{{oidc_database_host}}:{{oidc_database_port}}/{{oidc_database_name}}</Set>
+                <Set name="username">{{oidc_database_username}}</Set>
+                <Set name="password">{{oidc_database_password}}</Set>
+                <Set name="testOnBorrow">true</Set>
+                <Set name="validationQuery">SELECT 1</Set>
+            </New>
+        </Arg>
+    </New>
+</New>
