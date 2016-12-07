@@ -18,9 +18,9 @@
   </Call>
 
   <Call name="setInitParameter">
-          <Arg>spring.profiles.active</Arg>
-          <Arg type="java.lang.String">default,mysql</Arg>
-      </Call>
+    <Arg>spring.profiles.active</Arg>
+    <Arg type="java.lang.String">default,mysql</Arg>
+  </Call>
 
   <Call name="setAttribute">
     <Arg>org.apache.tomcat.InstanceManager</Arg>
@@ -45,31 +45,31 @@
     <Arg>org.eclipse.jetty.containerInitializers</Arg>
     <Arg>
       <New class="java.util.ArrayList">
-          <Call name="add">
-            <Arg>
-                <New class="org.eclipse.jetty.plus.annotation.ContainerInitializer">
-                <Arg><New class="org.eclipse.jetty.apache.jsp.JettyJasperInitializer"></New></Arg>
-                <Arg><Array type="java.lang.Class"></Array></Arg>
-              </New>
-            </Arg>
-          </Call>
-        </New>
+        <Call name="add">
+          <Arg>
+            <New class="org.eclipse.jetty.plus.annotation.ContainerInitializer">
+              <Arg><New class="org.eclipse.jetty.apache.jsp.JettyJasperInitializer"></New></Arg>
+              <Arg><Array type="java.lang.Class"></Array></Arg>
+            </New>
+          </Arg>
+        </Call>
+      </New>
     </Arg>
   </Call>
 
-    <!-- The data source -->
-    <New id="dsOidc" class="org.eclipse.jetty.plus.jndi.Resource">
-        <Arg><Ref refid="webapp"/></Arg>
-        <Arg>jdbc/OIDC</Arg>
-        <Arg>
-            <New class="org.apache.commons.dbcp.BasicDataSource">
-                  <Set name="driverClassName">com.mysql.jdbc.Driver</Set>
-                  <Set name="url">jdbc:mysql://{{oidc_database_host}}:{{oidc_database_port}}/{{oidc_database_name}}</Set>
-                <Set name="username">{{oidc_database_username}}</Set>
-                <Set name="password">{{oidc_database_password}}</Set>
-                <Set name="testOnBorrow">true</Set>
-                <Set name="validationQuery">SELECT 1</Set>
-            </New>
-        </Arg>
-    </New>
+  <!-- The data source -->
+  <New id="dsOidc" class="org.eclipse.jetty.plus.jndi.Resource">
+    <Arg><Ref refid="webapp"/></Arg>
+    <Arg>jdbc/OIDC</Arg>
+    <Arg>
+      <New class="org.apache.commons.dbcp.BasicDataSource">
+        <Set name="driverClassName">com.mysql.jdbc.Driver</Set>
+        <Set name="url">jdbc:mysql://{{oidc_database_host}}:{{oidc_database_port}}/{{oidc_database_name}}</Set>
+        <Set name="username">{{oidc_database_username}}</Set>
+        <Set name="password">{{oidc_database_password}}</Set>
+        <Set name="testOnBorrow">true</Set>
+        <Set name="validationQuery">SELECT 1</Set>
+      </New>
+    </Arg>
+  </New>
 </New>
