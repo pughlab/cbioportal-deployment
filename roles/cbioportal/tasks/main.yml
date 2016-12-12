@@ -152,6 +152,28 @@
     - { src: "cbioportal-import.xml.j2", dest: "{{webapp_directory}}/cbioportal-import.xml", mode: '0755' }
     - { src: "override-web.xml.j2", dest: "{{webapp_directory}}/override-web.xml", mode: '0755' }
     - { src: "cbioportal.init.j2", dest: "/etc/init.d/{{webapp_service_name}}", mode: '0755' }
+    - { src: "cbioportal-webapp.xml.j2", dest: "/tmp/cbioportal-webapp.xml" }
+
+## Slightly cunning. cat the file to put the templated content into
+## a variable. Then we can write it into the cBioPortal master
+## Jetty config.
+
+- name: cBioPortal | Read the templated configuration
+  command: cat /tmp/cbioportal-webapp.xml
+  register: cbioportal_webapp_xml_data
+
+- name: cBioPortal | Edit the configuration file body
+  blockinfile:
+    dest: {{webapp_directory}}/cbioportal.xml
+    marker: "<!-- {mark} WEBAPP -->"
+    block: |
+      {{ cbioportal_webapp_xml_data.stdout }}
+
+- name: cBioPortal | Edit the configuration file handler
+  blockinfile:
+    dest: {{webapp_directory}}/cbioportal.xml
+    marker: "<!-- {mark} WEBAPP HANDLER -->"
+    block: "<Item><Ref refid="webapp"/></Item>"
 
 - name: cBioPortal | Patch portal.properties
   lineinfile:

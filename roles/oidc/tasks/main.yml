@@ -12,23 +12,14 @@
     url: '{{ oidc_url }}'
     timeout: 600
 
-
-- name: OIDC | Create the database
+- name: OIDC | Create the database for OIDC
   mysql_db:
     name: "{{item}}"
     login_user: root
     login_password: "{{ mysql_root_password }}"
+    state: present
     encoding: 'utf8'
     collation: 'utf8_unicode_ci'
-  with_items:
-    - "{{oidc_database_name}}"
-
-- name: OIDC | Initialise the database
-  mysql_db:
-    name: "{{item}}"
-    state: present
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
   with_items:
     - "{{oidc_database_name}}"
 
@@ -44,3 +35,31 @@
     append_privs: yes
   with_items:
     - "{{oidc_database_name}}"
+
+- name: OIDC | Write configuration files
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }}
+  notify:
+    - restart service
+  with_items:
+    - { src: "oidc-webapp.xml.j2", dest: "/tmp/oidc-webapp.xml" }
+
+## Slightly cunning. cat the file to put the templated content into
+## a variable. Then we can write it into the cBioPortal master
+## Jetty config. 
+
+- name: OIDC | Read the templated configuration
+  command: cat /tmp/oidc-webapp.xml
+  register: oidc_webapp_xml_data
+
+- name: OIDC | Edit the configuration file body
+  blockinfile:
+    dest: {{webapp_directory}}/cbioportal.xml
+    marker: "<!-- {mark} AUTHENTICATION WEBAPP -->"
+    block: |
+      {{ oidc_webapp_xml_data.stdout }}
+
+- name: OIDC | Edit the configuration file handler
+  blockinfile:
+    dest: {{webapp_directory}}/cbioportal.xml
+    marker: "<!-- {mark} AUTHENTICATION WEBAPP HANDLER -->"
+    block: "<Item><Ref refid="webappOidc"/></Item>"
