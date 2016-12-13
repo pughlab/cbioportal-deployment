@@ -5,6 +5,8 @@
     - name: 'setup'
       setup:
         filter: '*'
+      tags:
+        - always
 
 - hosts: all
   tasks:
@@ -14,6 +16,8 @@
         - "vars/local_config_{{app_profile}}.yml"
         - "vars/{{ansible_os_family|lower}}.yml"
         - "vars/defaults.yml"
+      tags:
+        - always
 
 - hosts: database
   become: true
