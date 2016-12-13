@@ -6,6 +6,13 @@
   - maven
   - python-mysqldb
 
+- name: cBioPortal | Create directories
+  command: mkdir -p {{ item.path }} creates={{ item.path }}
+  with_items:
+    - { path: '{{webapp_directory}}' }
+    - { path: '{{webapp_log_directory}}' }
+    - { path: '{{webapp_pid_directory}}' }
+
 - name: cBioPortal | Clone the repository
   git:
     repo: "{{cbioportal_repository}}"
@@ -109,13 +116,6 @@
   shell: >
     echo "{{cbioportal_overlay_version.stdout | replace('version=', '')}}" > {{webapp_directory}}/overlay-version
 
-- name: cBioPortal | Create directories
-  command: mkdir -p {{ item.path }} creates={{ item.path }}
-  with_items:
-    - { path: '{{webapp_directory}}' }
-    - { path: '{{webapp_log_directory}}' }
-    - { path: '{{webapp_pid_directory}}' }
-
 - name: cBioPortal | Copy the built portal overlay to replace the default
   command: >
     cp {{build_overlay_dir}}/target/cbioportal-octane-{{cbioportal_overlay_version.stdout | replace('version=', '')}}.war {{webapp_directory}}/cbioportal-{{cbioportal_version.stdout | replace('version=', '')}}.war
@@ -152,7 +152,7 @@
     - { src: "cbioportal-import.xml.j2", dest: "{{webapp_directory}}/cbioportal-import.xml", mode: '0755' }
     - { src: "override-web.xml.j2", dest: "{{webapp_directory}}/override-web.xml", mode: '0755' }
     - { src: "cbioportal.init.j2", dest: "/etc/init.d/{{webapp_service_name}}", mode: '0755' }
-    - { src: "cbioportal-webapp.xml.j2", dest: "/tmp/cbioportal-webapp.xml" }
+    - { src: "cbioportal-webapp.xml.j2", dest: "/tmp/cbioportal-webapp.xml", mode: '0755' }
 
 ## Slightly cunning. cat the file to put the templated content into
 ## a variable. Then we can write it into the cBioPortal master
