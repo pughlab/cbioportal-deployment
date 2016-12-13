@@ -49,18 +49,35 @@
 <!-- BEGIN AUTHENTICATION WEBAPP -->
 <!-- END AUTHENTICATION WEBAPP -->
 
-  <Set name="handler">
-    <New class="org.eclipse.jetty.server.handler.HandlerCollection">
-      <Set name="handlers">
-        <Array type="org.eclipse.jetty.server.Handler">
+  <New id="rewriteHandler" class="org.eclipse.jetty.rewrite.handler.RewriteHandler">
+    <Set name="rewriteRequestURI">true</Set>
+    <Set name="rewritePathInfo">false</Set>
+    <Set name="originalPathAttribute">requestedPath</Set>
+
+    <Call name="addRule">
+      <Arg>
+        <New class="org.eclipse.jetty.rewrite.handler.RewriteRegexRule">
+          <Set name="regex">^/$</Set>
+          <Set name="replacement">/index.do</Set>
+        </New>
+      </Arg>
+    </Call>
+
+    <Set name="handler">
+      <New class="org.eclipse.jetty.server.handler.HandlerCollection">
+        <Set name="handlers">
+          <Array type="org.eclipse.jetty.server.Handler">
 <!-- BEGIN AUTHENTICATION WEBAPP HANDLER -->
 <!-- END AUTHENTICATION WEBAPP HANDLER -->
 <!-- BEGIN WEBAPP HANDLER -->
 <!-- END WEBAPP HANDLER -->
-        </Array>
-      </Set>
-    </New>
-  </Set>
+          </Array>
+        </Set>
+      </New>
+    </Set>
+  </New>
+
+  <Set name="handler"><Ref refid="rewriteHandler"/></Set>
 
   <Call class="org.eclipse.jetty.util.log.Log" name="getRootLogger">
     <Call name="setDebugEnabled">
