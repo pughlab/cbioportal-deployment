@@ -10,5 +10,3 @@ portal_settings:
     value: "jdbc:mysql://localhost/cbioportal"
   - key: 'mycancergenome.show'
     value: "false"
-
-enable_oidc: false

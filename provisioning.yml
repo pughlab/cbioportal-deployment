@@ -34,4 +34,4 @@
 - hosts: application
   become: true
   roles:
-    - { role: oidc, tags: [ 'oidc' ], when: enable_oidc }
+    - { role: oidc, tags: [ 'oidc' ], when: enable_oidc == true }

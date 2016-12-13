@@ -25,9 +25,9 @@
 
 - name: OIDC | Add an unprivileged user for the database
   mysql_user:
-    name: "{{ oidc_database_user }}"
+    name: "{{ oidc_database_username }}"
     password: "{{ oidc_database_password }}"
-    host: "{{ oidc_application_host }}"
+    host: "{{ oidc_database_host }}"
     state: present
     login_user: root
     login_password: "{{ mysql_root_password }}"
@@ -37,7 +37,7 @@
     - "{{oidc_database_name}}"
 
 - name: OIDC | Write configuration files
-  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }}
+  template: src={{ item.src }} dest={{ item.dest }}
   notify:
     - restart service
   with_items:
