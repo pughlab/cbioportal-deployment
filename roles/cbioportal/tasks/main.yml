@@ -164,16 +164,16 @@
 
 - name: cBioPortal | Edit the configuration file body
   blockinfile:
-    dest: {{webapp_directory}}/cbioportal.xml
+    dest: "{{webapp_directory}}/cbioportal.xml"
     marker: "<!-- {mark} WEBAPP -->"
     block: |
       {{ cbioportal_webapp_xml_data.stdout }}
 
 - name: cBioPortal | Edit the configuration file handler
   blockinfile:
-    dest: {{webapp_directory}}/cbioportal.xml
+    dest: "{{webapp_directory}}/cbioportal.xml"
     marker: "<!-- {mark} WEBAPP HANDLER -->"
-    block: "<Item><Ref refid="webapp"/></Item>"
+    block: '<Item><Ref refid="webapp"/></Item>'
 
 - name: cBioPortal | Patch portal.properties
   lineinfile:
