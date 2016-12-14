@@ -26,17 +26,10 @@ oidc_ldap_providers:
       - name: url
         value: "ldap://192.168.198.100"
   - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
-    name: "researchAuthProvider"
-    arguments:
-      - name: domain
-        value: "ads.uhnresearch.ca"
-      - name: url
-        value: "ldap://192.168.198.100"
-  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
     name: "corporateAuthProvider"
     arguments:
       - name: domain
-        value: "ldap://142.224.16.52"
+        value: "uhn.ca"
       - name: url
         value: "ldap://142.224.16.52"
   - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
