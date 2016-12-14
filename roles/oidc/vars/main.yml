@@ -9,3 +9,40 @@ oidc_database_port: 3306
 oidc_database_name: 'oidc'
 oidc_database_username: 'oidc'
 oidc_database_password: 'oidc'
+
+oidc_admin_user: 'stuartw'
+
+oidc_config_issuer: "http://localhost:8080/oidc/"
+oidc_config_logo_image_url: "resources/images/full_uhn_logo.png"
+oidc_config_topbar_title: "UHN OpenID Connect Server"
+
+
+oidc_ldap_providers:
+  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
+    name: "researchAuthProvider"
+    arguments:
+      - name: domain
+        value: "ads.uhnresearch.ca"
+      - name: url
+        value: "ldap://192.168.198.100"
+  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
+    name: "corporateAuthProvider"
+    arguments:
+      - name: domain
+        value: "uhn.ca"
+      - name: url
+        value: "ldap://142.224.16.52"
+  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
+    name: "rmpAuthProvider"
+    arguments:
+      - name: domain
+        value: "rmpuhn.ca"
+      - name: url
+        value: "ldap://142.224.244.137"
+  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
+    name: "partnersAuthProvider"
+    arguments:
+      - name: domain
+        value: "partners.uhn.ca"
+      - name: url
+        value: "ldap://142.224.135.81"

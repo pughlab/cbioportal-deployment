@@ -1,6 +1,6 @@
 <New id="webappOidc" class="org.eclipse.jetty.webapp.WebAppContext">
 
-  <Set name="overrideDescriptor">file://{{webapp_directory}}/override-web-oidc.xml</Set>
+  <Set name="overrideDescriptor">file://{{webapp_directory}}/oidc-override-web.xml</Set>
 
   <Set name="contextPath">/oidc</Set>
 
@@ -59,7 +59,7 @@
 
   <!-- The data source -->
   <New id="dsOidc" class="org.eclipse.jetty.plus.jndi.Resource">
-    <Arg><Ref refid="webapp"/></Arg>
+    <Arg><Ref refid="webappOidc"/></Arg>
     <Arg>jdbc/OIDC</Arg>
     <Arg>
       <New class="org.apache.commons.dbcp.BasicDataSource">
