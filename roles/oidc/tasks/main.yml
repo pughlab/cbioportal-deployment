@@ -14,6 +14,20 @@
     owner: '{{webapp_service_user}}'
     group: adm
 
+- name: OIDC | Write configuration files
+  template: src={{ item.src }} dest={{ item.dest }} mode={{item.mode}} owner={{webapp_service_user}} group=adm
+  notify:
+    - restart service
+  with_items:
+    - { src: "oidc-webapp.xml.j2", dest: "/tmp/oidc-webapp.xml", mode: '0750' }
+    - { src: "oidc-override-web.xml.j2", dest: "{{webapp_directory}}/oidc-override-web.xml", mode: '0644' }
+    - { src: "oidc-configuration.xml.j2", dest: "{{webapp_directory}}/oidc-configuration.xml", mode: '0644' }
+
+- name: OIDC | Write DB initialization file
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: "initialize_mysql.sql", dest: "/tmp/initialize_mysql.sql" }
+
 - name: OIDC | Create the database for OIDC
   mysql_db:
     name: "{{item}}"
@@ -38,14 +52,13 @@
   with_items:
     - "{{oidc_database_name}}"
 
-- name: OIDC | Write configuration files
-  template: src={{ item.src }} dest={{ item.dest }} mode={{item.mode}} owner={{webapp_service_user}} group=adm
-  notify:
-    - restart service
-  with_items:
-    - { src: "oidc-webapp.xml.j2", dest: "/tmp/oidc-webapp.xml", mode: '0750' }
-    - { src: "oidc-override-web.xml.j2", dest: "{{webapp_directory}}/oidc-override-web.xml", mode: '0644' }
-    - { src: "oidc-configuration.xml.j2", dest: "{{webapp_directory}}/oidc-configuration.xml", mode: '0644' }
+- name: OIDC | Initialize the database for OIDC
+  mysql_db:
+    name: "{{oidc_database_name}}"
+    state: import
+    target: '/tmp/initialize_mysql.sql'
+    login_user: "{{oidc_database_username}}"
+    login_password: "{{oidc_database_password}}"
 
 ## Slightly cunning. cat the file to put the templated content into
 ## a variable. Then we can write it into the cBioPortal master
