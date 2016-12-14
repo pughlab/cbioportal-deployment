@@ -59,7 +59,7 @@
 
   <!-- The data source -->
   <New id="dsOidc" class="org.eclipse.jetty.plus.jndi.Resource">
-    <Arg><Ref refid="webapp"/></Arg>
+    <Arg><Ref refid="webappOidc"/></Arg>
     <Arg>jdbc/OIDC</Arg>
     <Arg>
       <New class="org.apache.commons.dbcp.BasicDataSource">
