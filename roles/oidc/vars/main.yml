@@ -1,6 +1,6 @@
 ---
 oidc_repository: 'https://github.com/morungos/openid-connect-server'
-oidc_version: '1.0.2'
+oidc_version: '1.1.0-RC1'
 oidc_release: '{{oidc_repository}}/releases/download/{{oidc_version}}'
 oidc_url: '{{oidc_release}}/openid-connect-server-{{oidc_version}}.war'
 
@@ -16,7 +16,6 @@ oidc_config_issuer: "http://localhost:8080/oidc/"
 oidc_config_logo_image_url: "resources/images/full_uhn_logo.png"
 oidc_config_topbar_title: "UHN OpenID Connect Server"
 
-
 oidc_ldap_providers:
   - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
     name: "researchAuthProvider"
@@ -25,24 +24,3 @@ oidc_ldap_providers:
         value: "ads.uhnresearch.ca"
       - name: url
         value: "ldap://192.168.198.100"
-  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
-    name: "corporateAuthProvider"
-    arguments:
-      - name: domain
-        value: "uhn.ca"
-      - name: url
-        value: "ldap://142.224.16.52"
-  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
-    name: "rmpAuthProvider"
-    arguments:
-      - name: domain
-        value: "rmpuhn.ca"
-      - name: url
-        value: "ldap://142.224.244.137"
-  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
-    name: "partnersAuthProvider"
-    arguments:
-      - name: domain
-        value: "partners.uhn.ca"
-      - name: url
-        value: "ldap://142.224.135.81"
