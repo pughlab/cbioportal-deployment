@@ -27,13 +27,6 @@ webapp_service_config: '/etc/default/{{webapp_service_name}}.json'
 webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
 
 seed_database: 'https://storage.googleapis.com/cbiostorage-1/cbioportal-seed.sql.gz'
-cbioportal_repository: 'https://github.com/pughlab/cbioportal.git'
-cbioportal_overlay_repository: 'https://github.com/pughlab/cbioportal-octane-overlay.git'
-cbioportal_importer_repository: 'https://github.com/pughlab/cbioportal-importer.git'
-cbioportal_version: 'debloating-lite'
-cbioportal_overlay_version: 'develop'
-cbioportal_importer_version: 'develop'
-cbioportal_build_options: '-DskipTests'
 
 jetty_version: '1.0.4'
 jetty_url: 'https://repo1.maven.org/maven2/ca/uhnresearch/pughlab/java-server/{{jetty_version}}/java-server-{{jetty_version}}.jar'
