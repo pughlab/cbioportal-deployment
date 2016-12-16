@@ -11,7 +11,9 @@ CREATE TABLE IF NOT EXISTS access_token (
 	client_id BIGINT,
 	auth_holder_id BIGINT,
 	id_token_id BIGINT,
-	approved_site_id BIGINT
+	approved_site_id BIGINT,
+  INDEX at_tv_idx(token_value(767)),
+  INDEX at_exp_idx(expiration)
 );
 
 CREATE TABLE IF NOT EXISTS access_token_permissions (
@@ -173,7 +175,8 @@ CREATE TABLE IF NOT EXISTS client_details (
 
 	code_challenge_method VARCHAR(256),
 
-	UNIQUE (client_id)
+	UNIQUE (client_id),
+  INDEX cd_ci_idx(client_id)
 );
 
 CREATE TABLE IF NOT EXISTS client_request_uri (
@@ -211,7 +214,8 @@ CREATE TABLE IF NOT EXISTS refresh_token (
 	token_value VARCHAR(4096),
 	expiration TIMESTAMP NULL,
 	auth_holder_id BIGINT,
-	client_id BIGINT
+	client_id BIGINT,
+  INDEX rf_ahi_idx(auth_holder_id)
 );
 
 CREATE TABLE IF NOT EXISTS client_resource (
@@ -226,7 +230,8 @@ CREATE TABLE IF NOT EXISTS client_scope (
 
 CREATE TABLE IF NOT EXISTS token_scope (
 	owner_id BIGINT,
-	scope VARCHAR(2048)
+	scope VARCHAR(2048),
+  INDEX ts_oi_idx(owner_id)
 );
 
 CREATE TABLE IF NOT EXISTS system_scope (
@@ -360,10 +365,3 @@ CREATE TABLE IF NOT EXISTS saved_registered_client (
 	issuer VARCHAR(1024),
 	registered_client VARCHAR(8192)
 );
-
-
-CREATE INDEX at_tv_idx ON access_token(token_value(767));
-CREATE INDEX ts_oi_idx ON token_scope(owner_id);
-CREATE INDEX at_exp_idx ON access_token(expiration);
-CREATE INDEX rf_ahi_idx ON refresh_token(auth_holder_id);
-CREATE INDEX cd_ci_idx ON client_details(client_id);
