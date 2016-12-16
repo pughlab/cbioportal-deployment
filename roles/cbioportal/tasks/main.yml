@@ -45,7 +45,7 @@
     state: present
     insertafter: EOF
     backrefs: no
-  with_items: "{{portal_settings}}"
+  with_dict: "{{default_portal_settings | combine(portal_settings)}}"
 
 - name: cBioPortal | Copy the second portal.properties file
   command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"

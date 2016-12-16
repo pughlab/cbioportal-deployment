@@ -1,12 +1,16 @@
 ---
-portal_settings:
-  - key: 'db.user'
-    value: "cbioportal"
-  - key: 'db.password'
-    value: "cbioportal"
-  - key: 'app.name'
-    value: "cBioPortal"
-  - key: 'db.connection_string'
-    value: "jdbc:mysql://localhost/cbioportal"
-  - key: 'mycancergenome.show'
-    value: "false"
+default_portal_settings:
+  'db.user': "{{mysql_database_user}}"
+  'db.password': "{{mysql_database_password}}"
+  'db.host': "{{mysql_database_host}}:3306"
+  'app.name': "cBioPortal"
+  'db.connection_string': "jdbc:mysql://{{mysql_database_host}}:3306/{{mysql_database_name}}"
+  'mycancergenome.show': "false"
+
+portal_settings: {}
+
+## NOT SECURE -- "admin" / "pass" with bcrypt
+## SHOULD ALWAYS OVERRIDE
+
+oidc_admin_username: 'admin'
+oidc_admin_password: '$2a$05$JMcWp/w9v7jCrNI6CqAfOu6BgCH0eX6/X1KAqm8bmHodddlTV9Te6'
