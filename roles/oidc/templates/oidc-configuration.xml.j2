@@ -18,7 +18,7 @@
 
     <bean id="adminAuthProvider" class="ca.uhnresearch.pughlab.authentication.AdministrationAuthenticationProvider">
         <constructor-arg value="{{oidc_admin_username}}" />
-        <constructor-arg value="{{oidc_admin_password}}" />
+        <constructor-arg value="{{oidc_admin_password_bcrypt}}" />
     </bean>
 
 {% for item in oidc_ldap_providers %}

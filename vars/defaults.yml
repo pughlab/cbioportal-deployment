@@ -12,5 +12,8 @@ portal_settings: {}
 ## NOT SECURE -- "admin" / "pass" with bcrypt
 ## SHOULD ALWAYS OVERRIDE
 
+## We use the password twice here, once encrypted (this is pushed into the server) and
+## once clear, which is never stored but used to authenticate and write to the server.
 oidc_admin_username: 'admin'
-oidc_admin_password: '$2a$05$JMcWp/w9v7jCrNI6CqAfOu6BgCH0eX6/X1KAqm8bmHodddlTV9Te6'
+oidc_admin_password: 'pass'
+oidc_admin_password_bcrypt: '$2a$05$JMcWp/w9v7jCrNI6CqAfOu6BgCH0eX6/X1KAqm8bmHodddlTV9Te6'
