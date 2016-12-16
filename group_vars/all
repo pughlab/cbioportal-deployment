@@ -34,3 +34,9 @@ jetty_target: '{{webapp_directory}}/java-server.jar'
 
 import_directory: 'cbioportal_import'
 remote_staging: '/tmp/staging'
+
+webapp_external_base: 'https://cbioportal.uhnresearch.ca'
+
+oidc_application_name: "cBioPortal"
+oidc_application_client_id: "7fe4291b-b32f-4822-b224-4f0231471bf7"
+oidc_contact_email: "stuart.watt@uhnresearch.ca"

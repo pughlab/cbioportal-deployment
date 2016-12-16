@@ -1,0 +1,104 @@
+{
+  "exported-at": "2016-12-15T17:44:45-0500",
+  "exported-from": "http://localhost:8080/",
+  "exported-by": "stuart",
+  "mitreid-connect-1.2": {
+    "clients": [
+      {
+        "clientId": "{{oidc_application_client_id}}",
+        "resourceIds": [],
+        "secret": "{{oidc_application_secret}}",
+        "scope": [
+          "openid",
+          "email",
+          "profile"
+        ],
+        "authorities": [],
+        "accessTokenValiditySeconds": 3600,
+        "refreshTokenValiditySeconds": null,
+        "redirectUris": [
+          "{{webapp_external_base}}/login"
+        ],
+        "claimsRedirectUris": [],
+        "name": "{{oidc_application_name}}",
+        "uri": null,
+        "logoUri": null,
+        "contacts": [
+          "{{oidc_contact_email}}"
+        ],
+        "tosUri": null,
+        "tokenEndpointAuthMethod": "client_secret_basic",
+        "grantTypes": [
+          "authorization_code"
+        ],
+        "responseTypes": [
+          "code"
+        ],
+        "policyUri": null,
+        "jwksUri": null,
+        "jwks": null,
+        "applicationType": null,
+        "sectorIdentifierUri": null,
+        "subjectType": null,
+        "requestObjectSigningAlg": null,
+        "idTokenSignedResponseAlg": null,
+        "idTokenEncryptedResponseAlg": null,
+        "idTokenEncryptedResponseEnc": null,
+        "userInfoSignedResponseAlg": null,
+        "userInfoEncryptedResponseAlg": null,
+        "userInfoEncryptedResponseEnc": null,
+        "tokenEndpointAuthSigningAlg": null,
+        "defaultMaxAge": 60000,
+        "requireAuthTime": true,
+        "defaultACRValues": [],
+        "intitateLoginUri": null,
+        "postLogoutRedirectUri": [],
+        "requestUris": [],
+        "description": "",
+        "allowIntrospection": false,
+        "reuseRefreshToken": true,
+        "clearAccessTokensOnRefresh": true,
+        "dynamicallyRegistered": true
+      }
+    ],
+    "grants": [],
+    "whitelistedSites": [],
+    "blacklistedSites": [],
+    "authenticationHolders": [
+      {
+        "id": 1,
+        "requestParameters": {},
+        "clientId": "{{oidc_application_client_id}}",
+        "scope": [
+          "registration-token"
+        ],
+        "resourceIds": [],
+        "authorities": [
+          "ROLE_CLIENT"
+        ],
+        "approved": true,
+        "redirectUri": null,
+        "responseTypes": [],
+        "extensions": {},
+        "savedUserAuthentication": null
+      }
+    ],
+    "accessTokens": [
+      {
+        "id": 1,
+        "expiration": null,
+        "clientId": "{{oidc_application_client_id}}",
+        "authenticationHolderId": 1,
+        "refreshTokenId": null,
+        "idTokenId": null,
+        "scope": [
+          "registration-token"
+        ],
+        "type": "Bearer",
+        "value": "{{oidc_application_access_token}}"
+      }
+    ],
+    "refreshTokens": [],
+    "systemScopes": []
+  }
+}
