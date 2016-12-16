@@ -28,7 +28,6 @@
     - { key: 'innodb', section: 'mysqld', value: 'on' }
     - { key: 'default-storage-engine', section: 'mysqld', value: 'InnoDB' }
     - { key: 'innodb_buffer_pool_size', section: 'mysqld', value: '2G' }
-    - { key: 'innodb_log_file_size', section: 'mysqld', value: '512M' }
     - { key: 'max_allowed_packet', section: 'mysqld', value: '16M' }
     - { key: 'thread_stack', section: 'mysqld', value: '256K' }
     - { key: 'collation-server', section: 'mysqld', value: 'utf8_general_ci' }
