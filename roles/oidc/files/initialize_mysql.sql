@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS client_details (
 	allow_introspection BOOLEAN DEFAULT false NOT NULL,
 	id_token_validity_seconds BIGINT DEFAULT 600 NOT NULL,
 
-	client_id VARCHAR(256),
+	client_id VARCHAR(255),
 	client_secret BLOB,
 	access_token_validity_seconds BIGINT,
 	refresh_token_validity_seconds BIGINT,
