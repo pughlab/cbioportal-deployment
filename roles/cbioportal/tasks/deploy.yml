@@ -55,6 +55,11 @@
     marker: "<!-- {mark} WEBAPP HANDLER -->"
     block: '<Item><Ref refid="webapp"/></Item>'
 
+- name: cBioPortal | Copy patched portal.properties
+  copy:
+    src: "{{build_webapp_dir}}/src/main/resources/portal.properties"
+    dest: "{{webapp_directory}}/portal.properties"
+
 # - name: cBioPortal | Patch portal.properties
 #   lineinfile:
 #     dest: "{{build_webapp_dir}}/portal.properties"
