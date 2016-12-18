@@ -4,6 +4,13 @@
     repo: "{{cbioportal_repository}}"
     dest: "{{build_webapp_dir}}"
     version: "{{cbioportal_version}}"
+    force: yes
+
+- name: cBioPortal | Patch files, fixing any pending issues
+  patch:
+    src: fixes.patch
+    basedir: "{{build_webapp_dir}}"
+    strip: 1
 
 - name: cBioPortal | Copy any files we need to edit
   command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_webapp_dir}}" creates="{{build_webapp_dir}}/{{item.dest}}"
