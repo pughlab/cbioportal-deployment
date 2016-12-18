@@ -1,0 +1,21 @@
+---
+- name: cBioPortal | Clone the overlay repository
+  git:
+    repo: "{{cbioportal_overlay_repository}}"
+    dest: "{{build_overlay_dir}}"
+    version: "{{cbioportal_overlay_version}}"
+
+- name: cBioPortal | Build cBioPortal overlay
+  command: >
+    mvn clean compile test package install
+    chdir="{{build_overlay_dir}}"
+
+- name: cBioPortal | Detect version in pom.xml
+  shell: >
+    echo 'version=${project.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
+    chdir="{{build_overlay_dir}}"
+  register: cbioportal_overlay_version
+
+- name: cBioPortal | Copy the overlay version into a stored file
+  shell: >
+    echo "{{cbioportal_overlay_version.stdout | replace('version=', '')}}" > /tmp/build.overlay.version

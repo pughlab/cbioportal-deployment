@@ -1,10 +1,4 @@
 ---
-- name: cBioPortal | Install git
-  apt: name={{ item }} update_cache=yes cache_valid_time=3600 state=present
-  with_items:
-  - git
-  - maven
-
 - name: cBioPortal | Clone the repository
   git:
     repo: "{{cbioportal_repository}}"
@@ -58,8 +52,8 @@
 
 - name: cBioPortal | Copy the cBioPortal version into a stored file
   shell: >
-    echo "{{cbioportal_version.stdout | replace('version=', '')}}" > {{build_webapp_dir}}/version
+    echo "{{cbioportal_version.stdout | replace('version=', '')}}" > /tmp/build.project.version
 
 - name: cBioPortal | Copy the cBioPortal version into a stored file
   shell: >
-    echo "{{cbioportal_version.stdout | replace('version=', '')}}" > {{build_webapp_dir}}/db_version
+    echo "{{cbioportal_version.stdout | replace('version=', '')}}" > /tmp/build.db.version

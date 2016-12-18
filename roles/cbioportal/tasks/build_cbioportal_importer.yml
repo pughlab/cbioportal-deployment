@@ -1,0 +1,21 @@
+---
+- name: cBioPortal | Clone the importer repository
+  git:
+    repo: "{{cbioportal_importer_repository}}"
+    dest: "{{build_importer_dir}}"
+    version: "{{cbioportal_importer_version}}"
+
+- name: cBioPortal | Build cBioPortal importer
+  command: >
+    mvn clean compile test package install
+    chdir="{{build_importer_dir}}"
+
+- name: cBioPortal | Detect importer version in pom.xml
+  shell: >
+    echo 'version=${project.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
+    chdir="{{build_importer_dir}}"
+  register: cbioportal_importer_version
+
+- name: cBioPortal | Copy the importer version into a stored file
+  shell: >
+    echo "{{cbioportal_importer_version.stdout | replace('version=', '')}}" > /tmp/build.importer.version
