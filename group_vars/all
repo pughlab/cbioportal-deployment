@@ -12,7 +12,7 @@ mysql_application_host: 'localhost'
 
 mysql_data_dir: '/var/lib/mysql'
 
-build_dir: '/root/cbioportal'
+build_webapp_dir: '/root/cbioportal'
 build_overlay_dir: '/root/cbioportal-overlay'
 build_importer_dir: '/root/cbioportal-importer'
 

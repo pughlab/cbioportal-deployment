@@ -16,7 +16,7 @@
 - name: cBioPortal | Clone the repository
   git:
     repo: "{{cbioportal_repository}}"
-    dest: "{{build_dir}}"
+    dest: "{{build_webapp_dir}}"
     version: "{{cbioportal_version}}"
 
 - name: cBioPortal | Clone the overlay repository
@@ -32,14 +32,14 @@
     version: "{{cbioportal_importer_version}}"
 
 - name: cBioPortal | Copy any files we need to edit
-  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_webapp_dir}}" creates="{{build_webapp_dir}}/{{item.dest}}"
   with_items:
     - {src: "src/main/resources/portal.properties.EXAMPLE", dest: "portal.properties"}
     - {src: "src/main/resources/log4j.properties.EXAMPLE", dest: "log4j.properties"}
 
 - name: cBioPortal | Patch portal.properties
   lineinfile:
-    dest: "{{build_dir}}/portal.properties"
+    dest: "{{build_webapp_dir}}/src/main/resources/portal.properties"
     regexp: '^{{item.key}}\s*=\s*(.*)$'
     line: "{{item.key}}={{item.value}}"
     state: present
@@ -48,7 +48,7 @@
   with_dict: "{{default_portal_settings | combine(portal_settings)}}"
 
 - name: cBioPortal | Copy the second portal.properties file
-  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_webapp_dir}}" creates="{{build_webapp_dir}}/{{item.dest}}"
   with_items:
     - {src: "portal.properties", dest: "src/main/resources/portal.properties"}
     - {src: "log4j.properties", dest: "src/main/resources/log4j.properties"}
@@ -60,8 +60,8 @@
 
 - name: cBioPortal | Build cBioPortal
   command: >
-    env PORTAL_HOME={{build_dir}} mvn {{cbioportal_build_options}} clean compile test package install -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
-    chdir="{{build_dir}}"
+    env PORTAL_HOME={{build_webapp_dir}} mvn {{cbioportal_build_options}} clean compile test package install -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
+    chdir="{{build_webapp_dir}}"
 
 ## Detecting the version is a little bit complex. We need to evaluate and extract
 ## a given string. This is a sneaky way to do it in Maven. Note that we pipe in and
@@ -73,13 +73,13 @@
 - name: cBioPortal | Detect version in pom.xml
   shell: >
     echo 'version=${project.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
-    chdir="{{build_dir}}"
+    chdir="{{build_webapp_dir}}"
   register: cbioportal_version
 
 - name: cBioPortal | Detect db.version in pom.xml
   shell: >
     echo 'version=${db.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
-    chdir="{{build_dir}}"
+    chdir="{{build_webapp_dir}}"
   register: cbioportal_db_version
 
 - name: cBioPortal | Copy the cBioPortal version into a stored file
@@ -122,7 +122,7 @@
 
 - name: cBioPortal | Copy the built scripts jar
   command: >
-    cp {{build_dir}}/scripts/target/scripts-{{cbioportal_version.stdout | replace('version=', '')}}.jar {{webapp_directory}}
+    cp {{build_webapp_dir}}/scripts/target/scripts-{{cbioportal_version.stdout | replace('version=', '')}}.jar {{webapp_directory}}
 
 - name: cBioPortal | Copy the built runner executable
   command: >
@@ -138,7 +138,7 @@
     url: '{{jetty_url}}'
 
 - name: cBioPortal | Copy the built portal.properties file
-  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_dir}}" creates="{{build_dir}}/{{item.dest}}"
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_webapp_dir}}" creates="{{build_webapp_dir}}/{{item.dest}}"
   with_items:
     - {src: "portal.properties", dest: "{{webapp_directory}}/portal.properties"}
     - {src: "log4j.properties", dest: "{{webapp_directory}}/log4j.properties"}
@@ -177,7 +177,7 @@
 
 - name: cBioPortal | Patch portal.properties
   lineinfile:
-    dest: "{{build_dir}}/portal.properties"
+    dest: "{{build_webapp_dir}}/portal.properties"
     regexp: '^db.version\s*=\s*(.*)$'
     line: "db.version={{cbioportal_db_version.stdout | replace('version=', '')}}"
     state: present
@@ -186,7 +186,7 @@
 
 - name: cBioPortal | Update the database schema
   shell: >
-     yes | python {{build_dir}}/core/src/main/scripts/migrate_db.py -p {{webapp_directory}}/portal.properties -s {{build_dir}}/core/src/main/resources/db/migration.sql
+     yes | python {{build_webapp_dir}}/core/src/main/scripts/migrate_db.py -p {{webapp_directory}}/portal.properties -s {{build_webapp_dir}}/core/src/main/resources/db/migration.sql
 
 - name: cBioPortal | Create user
   user: name={{webapp_service_user}} comment="{{webapp_service_user}} webapp" state=present
