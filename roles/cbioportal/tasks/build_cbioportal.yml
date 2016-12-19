@@ -1,0 +1,78 @@
+---
+- name: cBioPortal | Clone the repository
+  git:
+    repo: "{{cbioportal_repository}}"
+    dest: "{{build_webapp_dir}}"
+    version: "{{cbioportal_version}}"
+    force: yes
+
+- name: cBioPortal | Patch files, fixing any pending issues
+  patch:
+    src: fixes.patch
+    basedir: "{{build_webapp_dir}}"
+    strip: 1
+
+- name: cBioPortal | Copy any files we need to edit
+  command: cp "{{item.src}}" "{{item.dest}}" chdir="{{build_webapp_dir}}" creates="{{build_webapp_dir}}/{{item.dest}}"
+  with_items:
+    - {src: "src/main/resources/portal.properties.EXAMPLE", dest: "src/main/resources/portal.properties"}
+    - {src: "src/main/resources/log4j.properties.EXAMPLE", dest: "src/main/resources/log4j.properties"}
+
+- name: cBioPortal | Patch portal.properties
+  lineinfile:
+    dest: "{{build_webapp_dir}}/src/main/resources/portal.properties"
+    regexp: '^{{item.key}}\s*=\s*(.*)$'
+    line: "{{item.key}}={{item.value}}"
+    state: present
+    insertafter: EOF
+    backrefs: no
+  with_dict: "{{default_portal_settings | combine(portal_settings)}}"
+
+- name: cBioPortal | Patch log4j.properties
+  lineinfile:
+    dest: "{{build_webapp_dir}}/src/main/resources/log4j.properties"
+    regexp: '^{{item.key}}\s*=\s*(.*)$'
+    line: "{{item.key}}={{item.value}}"
+    state: present
+    insertafter: EOF
+    backrefs: no
+  with_dict:
+    'log4j.appender.a.rollingPolicy.FileNamePattern': "{{webapp_log_directory}}/cbioportal.log.%d.gz"
+    'log4j.appender.a.File': "{{webapp_log_directory}}/cbioportal.log"
+
+## Question. Should we run this with idempotence? I'm thinking not, because the
+## repository might have changed. Best to clean and do a complete build,
+## at least until we have a better way. That will typically involve using something
+## which doesn't even compile.
+
+- name: cBioPortal | Build cBioPortal
+  command: >
+    env PORTAL_HOME={{build_webapp_dir}} mvn {{cbioportal_build_options}} clean compile test package install -Ddb.test.username={{mysql_database_user}} -Ddb.test.password={{mysql_database_password}}
+    chdir="{{build_webapp_dir}}"
+
+## Detecting the version is a little bit complex. We need to evaluate and extract
+## a given string. This is a sneaky way to do it in Maven. Note that we pipe in and
+## use interactive as that allows us to prefix and therefore detect the version
+## in a huge mess of Maven logging.
+##
+## We'll also need to use a Jinja2 filter to remove the prefix value from here on.
+
+- name: cBioPortal | Detect version in pom.xml
+  shell: >
+    echo 'version=${project.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
+    chdir="{{build_webapp_dir}}"
+  register: cbioportal_version
+
+- name: cBioPortal | Detect db.version in pom.xml
+  shell: >
+    echo 'version=${db.version}' | mvn -N org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate | grep "^version="
+    chdir="{{build_webapp_dir}}"
+  register: cbioportal_db_version
+
+- name: cBioPortal | Copy the cBioPortal version into a stored file
+  shell: >
+    echo "{{cbioportal_version.stdout | replace('version=', '')}}" > /tmp/build.project.version
+
+- name: cBioPortal | Copy the cBioPortal version into a stored file
+  shell: >
+    echo "{{cbioportal_version.stdout | replace('version=', '')}}" > /tmp/build.db.version

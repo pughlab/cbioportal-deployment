@@ -1,8 +1,10 @@
 ---
-cbioportal_repository: 'https://github.com/pughlab/cbioportal.git'
-cbioportal_overlay_repository: 'https://github.com/pughlab/cbioportal-octane-overlay.git'
-cbioportal_importer_repository: 'https://github.com/pughlab/cbioportal-importer.git'
-cbioportal_version: 'debloating-lite'
-cbioportal_overlay_version: 'develop'
-cbioportal_importer_version: 'develop'
+cbioportal_repository: 'https://github.com/cBioPortal/cbioportal.git'
+cbioportal_version: 'master'
 cbioportal_build_options: '-DskipTests'
+
+cbioportal_overlay_repository: 'https://github.com/pughlab/cbioportal-octane-overlay.git'
+cbioportal_overlay_version: 'develop'
+
+cbioportal_importer_repository: 'https://github.com/pughlab/cbioportal-importer.git'
+cbioportal_importer_version: 'develop'
