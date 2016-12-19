@@ -39,7 +39,7 @@
             </Item>
           </Array>
         </Arg>
-        <Set name="port"><Property name="jetty.port" default="8080"/></Set>
+        <Set name="port"><Property name="jetty.port" default="{{webapp_listen_port}}"/></Set>
       </New>
     </Arg>
   </Call>
