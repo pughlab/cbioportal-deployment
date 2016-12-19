@@ -16,7 +16,7 @@
 
 - name: cBioPortal | Copy the built runner executable
   command: >
-    cp {{build_importer_dir}}/target/cbioportal-importer-{{cbioportal_importer_version.stdout | replace('version=', '')}}-jar-with-dependencies.jar {{webapp_directory}}/cbioportal-importer-{{cbioportal_importer_version.stdout | replace('version=', '')}}.jar
+    cp {{build_importer_dir}}/target/cbioportal-importer-{{cbioportal_importer_version.stdout | replace('version=', '')}}.jar {{webapp_directory}}/cbioportal-importer-{{cbioportal_importer_version.stdout | replace('version=', '')}}.jar
 
 - name: cBioPortal | Download Jetty
   get_url:
