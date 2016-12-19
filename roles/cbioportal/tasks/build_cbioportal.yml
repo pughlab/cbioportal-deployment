@@ -28,6 +28,18 @@
     backrefs: no
   with_dict: "{{default_portal_settings | combine(portal_settings)}}"
 
+- name: cBioPortal | Patch log4j.properties
+  lineinfile:
+    dest: "{{build_webapp_dir}}/src/main/resources/log4j.properties"
+    regexp: '^{{item.key}}\s*=\s*(.*)$'
+    line: "{{item.key}}={{item.value}}"
+    state: present
+    insertafter: EOF
+    backrefs: no
+  with_dict:
+    'log4j.appender.a.rollingPolicy.FileNamePattern': "{{webapp_log_directory}}/cbioportal.log.%d.gz"
+    'log4j.appender.a.File': "{{webapp_log_directory}}/cbioportal.log"
+
 ## Question. Should we run this with idempotence? I'm thinking not, because the
 ## repository might have changed. Best to clean and do a complete build,
 ## at least until we have a better way. That will typically involve using something
