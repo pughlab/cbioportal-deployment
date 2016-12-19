@@ -59,6 +59,7 @@
   copy:
     src: "{{build_webapp_dir}}/src/main/resources/portal.properties"
     dest: "{{webapp_directory}}/portal.properties"
+    remote_src: yes
 
 # - name: cBioPortal | Patch portal.properties
 #   lineinfile:

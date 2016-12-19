@@ -52,20 +52,11 @@
 - name: MySQL | Create the database
   mysql_db:
     name: "{{item}}"
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    encoding: 'utf8'
-    collation: 'utf8_unicode_ci'
-  with_items:
-    - "{{mysql_database_name}}"
-    - "{{mysql_test_database_name}}"
-
-- name: MySQL | Initialise the database
-  mysql_db:
-    name: "{{item}}"
     state: present
     login_user: root
     login_password: "{{ mysql_root_password }}"
+    encoding: 'latin1'
+    collation: 'latin1_general_ci'
   with_items:
     - "{{mysql_database_name}}"
     - "{{mysql_test_database_name}}"
