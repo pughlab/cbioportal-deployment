@@ -49,6 +49,10 @@
 <!-- BEGIN AUTHENTICATION WEBAPP -->
 <!-- END AUTHENTICATION WEBAPP -->
 
+  <!--
+  Add a rewrite handler, so that we go from / -> /index.do, without needing to
+  add in a proxying or anything. Other rewrite rules can go here if needed. 
+  -->
   <New id="rewriteHandler" class="org.eclipse.jetty.rewrite.handler.RewriteHandler">
     <Set name="rewriteRequestURI">true</Set>
     <Set name="rewritePathInfo">false</Set>
