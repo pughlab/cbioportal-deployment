@@ -14,7 +14,7 @@
 
 ###
 # chkconfig: 345 20 80
-# description: cBioPortal
+# description: {{webapp_service_name}}
 # processname: java
 #
 # Installation (CentOS):
@@ -41,9 +41,9 @@ APPLICATION_DIR="{{webapp_directory}}"
 # The fat jar containing your application
 APPLICATION_JAR="{{jetty_target}}"
 # The application argument such as -cluster -cluster-host ...
-APPLICATION_ARGS="cbioportal.xml"
+APPLICATION_ARGS="{{webapp_service_name}}.xml"
 # cBioPortal options and system properties (-Dfoo=bar).
-CBIOPORTAL_OPTS=""
+APPLICATION_OPTS=""
 # cBioPortal home
 PORTAL_HOME="{{webapp_directory}}"
 # Java
@@ -96,7 +96,7 @@ start() {
   fi
 
   pushd $APPLICATION_DIR > /dev/null
-  nohup $JAVA $CBIOPORTAL_OPTS -jar $APPLICATION_JAR $APPLICATION_ARGS > $OUT_FILE 2>&1 &
+  nohup $JAVA $APPLICATION_OPTS -jar $APPLICATION_JAR $APPLICATION_ARGS > $OUT_FILE 2>&1 &
   echo $! > ${RUNNING_PID}
   popd > /dev/null
 

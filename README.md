@@ -18,4 +18,9 @@ key set up accordingly.
 
 The command is then:
 
-    $ ansible-playbook -vvv -i test-inventory.ini --connection=ssh --become-method=su provisioning.yml
+    $ ansible-playbook -vv -i test-inventory.ini provisioning.yml
+
+### Overview
+
+This deploys a complete and working cBioPortal. It also contains an import play which can be used
+to add new data to the portal automatically.

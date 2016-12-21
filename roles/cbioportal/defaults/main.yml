@@ -14,9 +14,6 @@ build_webapp_dir: '/root/cbioportal'
 build_overlay_dir: '/root/cbioportal-overlay'
 build_importer_dir: '/root/cbioportal-importer'
 
-webapp_service_name: 'cbioportal'
-
-webapp_directory: '/usr/lib/{{webapp_service_name}}'
 webapp_log_directory: '/var/log/{{webapp_service_name}}'
 webapp_pid_directory: '/var/run/{{webapp_service_name}}'
 

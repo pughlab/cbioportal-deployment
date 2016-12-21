@@ -8,30 +8,12 @@
       tags:
         - always
 
-- hosts: all
-  tasks:
-    - name: Local variables
-      include_vars: "{{ item }}"
-      with_first_found:
-        - "vars/local_config_{{app_profile}}.yml"
-        - "vars/{{ansible_os_family|lower}}.yml"
-        - "vars/defaults.yml"
-      tags:
-        - always
-
 - hosts: database
   become: true
   roles:
     - { role: database, tags: [ 'database' ] }
-    - { role: initialize, tags: [ 'initialize' ] }
 
 - hosts: application
   become: true
   roles:
-    - { role: java, tags: [ 'java' ] }
     - { role: cbioportal, tags: [ 'cbioportal' ] }
-
-- hosts: application
-  become: true
-  roles:
-    - { role: oidc, tags: [ 'oidc' ], when: enable_oidc == true }

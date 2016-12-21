@@ -1,42 +1,12 @@
 ---
 app_profile: 'default'
 
-mysql_root_password: 'f3042dfb0da5'
-mysql_database_host: 'localhost'
-mysql_database_port: '3306'
-mysql_database_name: 'cbioportal'
-mysql_database_user: 'cbioportal'
-mysql_database_password: 'cbioportal'
-mysql_test_database_name: 'cgds_test'
-mysql_application_host: 'localhost'
-
 mysql_data_dir: '/var/lib/mysql'
-
-build_webapp_dir: '/root/cbioportal'
-build_overlay_dir: '/root/cbioportal-overlay'
-build_importer_dir: '/root/cbioportal-importer'
-
-webapp_service_name: 'cbioportal'
-webapp_service_user: '{{webapp_service_name}}'
-
-webapp_directory: '/usr/lib/{{webapp_service_name}}'
-webapp_log_directory: '/var/log/{{webapp_service_name}}'
-webapp_pid_directory: '/var/run/{{webapp_service_name}}'
-
-webapp_service_config: '/etc/default/{{webapp_service_name}}.json'
-webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
 
 seed_database: 'https://storage.googleapis.com/cbiostorage-1/cbioportal-seed.sql.gz'
 
-jetty_version: '1.0.4'
-jetty_url: 'https://repo1.maven.org/maven2/ca/uhnresearch/pughlab/java-server/{{jetty_version}}/java-server-{{jetty_version}}.jar'
-jetty_target: '{{webapp_directory}}/java-server.jar'
-
 import_directory: 'cbioportal_import'
 remote_staging: '/tmp/staging'
-
-webapp_listen_port: 8080
-webapp_external_base: 'https://cbioportal.uhnresearch.ca'
 
 oidc_application_name: "cBioPortal"
 oidc_application_client_id: "7fe4291b-b32f-4822-b224-4f0231471bf7"

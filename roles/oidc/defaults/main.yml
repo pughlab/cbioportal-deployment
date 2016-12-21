@@ -24,3 +24,6 @@ oidc_ldap_providers:
         value: "ads.uhnresearch.ca"
       - name: url
         value: "ldap://192.168.198.100"
+
+## By default, don't enable OIDC
+enable_oidc: false
