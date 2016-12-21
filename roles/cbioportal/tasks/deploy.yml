@@ -52,15 +52,6 @@
     dest: "{{webapp_directory}}/portal.properties"
     remote_src: yes
 
-# - name: cBioPortal | Patch portal.properties
-#   lineinfile:
-#     dest: "{{build_webapp_dir}}/portal.properties"
-#     regexp: '^db.version\s*=\s*(.*)$'
-#     line: "db.version={{cbioportal_db_version.stdout | replace('version=', '')}}"
-#     state: present
-#     insertafter: EOF
-#     backrefs: no
-#
 - name: cBioPortal | Update the database schema
   shell: >
      yes | python {{build_webapp_dir}}/core/src/main/scripts/migrate_db.py -p {{webapp_directory}}/portal.properties -s {{build_webapp_dir}}/core/src/main/resources/db/migration.sql
@@ -69,5 +60,4 @@
   file: path={{ item.path }} recurse=yes owner={{webapp_service_user}} group=adm mode={{ item.mode }}
   with_items:
     - { path: '{{webapp_log_directory}}', mode: '0750' }
-    - { path: '{{webapp_pid_directory}}', mode: '0750' }
     - { path: '{{webapp_directory}}', mode: '0755' }
