@@ -30,3 +30,5 @@ default_portal_settings:
   'mycancergenome.show': "false"
 
 portal_settings: {}
+
+authentication_portal_settings: {}

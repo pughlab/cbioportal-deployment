@@ -6,12 +6,12 @@
 
   <context-param>
     <param-name>spring.profiles.default</param-name>
-    <param-value>jndi,false</param-value>
+    <param-value>jndi,{{authentication_portal_settings.authenticate | default('false')}}</param-value>
   </context-param>
 
   <context-param>
     <param-name>spring.profiles.active</param-name>
-    <param-value>jndi,false</param-value>
+    <param-value>jndi,{{authentication_portal_settings.authenticate | default('false')}}</param-value>
   </context-param>
 
   <resource-ref>

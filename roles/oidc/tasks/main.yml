@@ -114,6 +114,14 @@
   command: "curl --data 'j_username={{oidc_admin_username}}&j_password={{oidc_admin_password}}&submit=Login' -c /tmp/cookies http://localhost:8080/oidc/j_spring_security_check"
   when: enable_oidc
 
+## This might well fail, but it doesn't really matter if it does, so long as it
+## writes enough to create the client if it doesn't already exist. 
+
 - name: OIDC | Write the data to the server when authenticated
-  command: "curl -X POST -d @/tmp/oidc-import.json -H 'Accept: application/json' -H 'Content-type: application/json' -b /tmp/cookies http://localhost:8080/oidc/api/data"
+  command: "curl -X POST -d @/tmp/oidc-import.json -H 'Accept: application/json' -H 'Content-type: application/json' -b /tmp/cookies http://localhost:8080/oidc/api/clients"
+  when: enable_oidc
+
+- name: OIDC | Report configuration
+  set_fact:
+    authentication_portal_settings: "{{authentication_portal_settings_value}}"
   when: enable_oidc

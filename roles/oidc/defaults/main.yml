@@ -27,3 +27,14 @@ oidc_ldap_providers:
 
 ## By default, don't enable OIDC
 enable_oidc: false
+
+authentication_portal_settings: {}
+
+authentication_portal_settings_value:
+  'authenticate': 'openid-connect'
+  'authorization': 'true'
+  'oidc.adminSubject': '{{oidc_admin_user}}'
+  'oidc.issuer': "{{webapp_external_base}}/oidc"
+  'oidc.clientId': '{{oidc_application_client_id}}'
+  'oidc.clientSecret': '{{oidc_application_secret}}'
+  'oidc.redirect': "{{webapp_external_base}}/login"
