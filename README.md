@@ -2,9 +2,17 @@
 
 This package contains [ansible](https://www.ansible.com/) plays for deploying a cBioPortal instance on a remote server.
 
+### Inventories
+
+To make managing multiple sites possible, a range of deployments can be managed
+under a single directory, `inventories`. Each is a directory containing a `hosts.ini`
+file and a `group_vars` directory containing the settings needed for each group.
+All roles and deployments share settings. The variables can also be secured using
+`ansible-vault`.
+
 ### With virtualbox
 
-This is demonstrated by `test-inventory.ini`.
+This is demonstrated by `inventories/virtualbox/hosts.ini`.
 
 These groups use a config like this from .ssh/config. I assume you have an ssh
 key set up accordingly.
@@ -18,7 +26,7 @@ key set up accordingly.
 
 The command is then:
 
-    $ ansible-playbook -vv -i test-inventory.ini provisioning.yml
+    $ ansible-playbook -v -i inventories/virtualbox/hosts.ini provisioning.yml
 
 ### Overview
 
