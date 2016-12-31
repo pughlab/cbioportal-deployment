@@ -10,7 +10,7 @@ oidc_database_name: 'oidc'
 oidc_database_username: 'oidc'
 oidc_database_password: 'oidc'
 
-oidc_admin_user: 'stuartw'
+oidc_admin_username: 'stuartw'
 
 oidc_config_issuer: "http://localhost:8080/oidc/"
 oidc_config_logo_image_url: "resources/images/full_uhn_logo.png"
