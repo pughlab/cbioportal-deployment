@@ -1,0 +1,25 @@
+---
+- name: Java | Add the Oracle repository
+  apt_repository:
+    repo: "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main"
+    state: present
+    filename: "oracle-java"
+
+- name: Java | Add the Oracle signing key
+  apt_key:
+    id: EEA14886
+    keyserver: "hkp://keyserver.ubuntu.com:80"
+    state: present
+
+- name: Java | Automatically select the Oracle License
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+
+- name: Java | Install Java runtime
+  apt:
+    pkg: "{{item}}"
+    state: present
+    update_cache: yes
+    cache_valid_time: -1
+  with_items:
+    - oracle-java8-installer
+    - oracle-java8-set-default
