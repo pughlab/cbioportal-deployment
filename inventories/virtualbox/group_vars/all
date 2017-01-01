@@ -2,6 +2,8 @@
 ## NOT SECURE -- "admin" / "pass" with bcrypt
 ## SHOULD ALWAYS OVERRIDE
 
+webapp_external_base: 'http://localhost:8080'
+
 oidc_admin_username: 'admin'
 oidc_admin_password: 'pass'
 oidc_admin_password_bcrypt: '$2a$05$JMcWp/w9v7jCrNI6CqAfOu6BgCH0eX6/X1KAqm8bmHodddlTV9Te6'
