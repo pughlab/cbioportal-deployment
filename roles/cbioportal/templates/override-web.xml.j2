@@ -14,6 +14,15 @@
     <param-value>jndi,{{authentication_portal_settings.authenticate | default('false')}}</param-value>
   </context-param>
 
+  <filter>
+    <filter-name>CORS Filter</filter-name>
+    <filter-class>org.ebaysf.web.cors.CORSFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CORS Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <resource-ref>
     <res-ref-name>jdbc/cbioportal</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
