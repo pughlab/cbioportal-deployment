@@ -1,0 +1,16 @@
+---
+- name: cBioPortal | Create user
+  user:
+    name: "{{webapp_service_user}}"
+    comment: "{{webapp_service_user}} webapp"
+    state: present
+
+- name: cBioPortal | Create application directory
+  file:
+    dest: '{{webapp_directory}}'
+    state: directory
+
+- name: cBioPortal | Create log directory
+  file:
+    dest: '{{webapp_log_directory}}'
+    state: directory

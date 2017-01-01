@@ -4,13 +4,13 @@ oidc_version: '1.1.0-RC1'
 oidc_release: '{{oidc_repository}}/releases/download/{{oidc_version}}'
 oidc_url: '{{oidc_release}}/openid-connect-server-{{oidc_version}}.war'
 
-oidc_database_host: 'localhost'
+oidc_database_host: '{{mysql_database_host}}'
 oidc_database_port: 3306
 oidc_database_name: 'oidc'
 oidc_database_username: 'oidc'
 oidc_database_password: 'oidc'
 
-oidc_admin_user: 'stuartw'
+oidc_admin_username: 'stuartw'
 
 oidc_config_issuer: "http://localhost:8080/oidc/"
 oidc_config_logo_image_url: "resources/images/full_uhn_logo.png"
@@ -24,3 +24,17 @@ oidc_ldap_providers:
         value: "ads.uhnresearch.ca"
       - name: url
         value: "ldap://192.168.198.100"
+
+## By default, don't enable OIDC
+enable_oidc: false
+
+authentication_portal_settings: {}
+
+authentication_portal_settings_value:
+  'authenticate': 'openid-connect'
+  'authorization': 'true'
+  'oidc.adminSubject': '{{oidc_admin_user}}'
+  'oidc.issuer': "{{webapp_external_base}}/oidc"
+  'oidc.clientId': '{{oidc_application_client_id}}'
+  'oidc.clientSecret': '{{oidc_application_secret}}'
+  'oidc.redirect': "{{webapp_external_base}}/login"

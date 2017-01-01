@@ -26,7 +26,7 @@
     state: present
     insertafter: EOF
     backrefs: no
-  with_dict: "{{default_portal_settings | combine(portal_settings)}}"
+  with_dict: "{{default_portal_settings | combine(authentication_portal_settings) | combine(portal_settings)}}"
 
 - name: cBioPortal | Patch log4j.properties
   lineinfile:

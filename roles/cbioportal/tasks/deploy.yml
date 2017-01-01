@@ -2,8 +2,6 @@
 - name: cBioPortal | Create directories
   command: mkdir -p {{ item.path }} creates={{ item.path }}
   with_items:
-    - { path: '{{webapp_directory}}' }
-    - { path: '{{webapp_log_directory}}' }
     - { path: '{{webapp_pid_directory}}' }
 
 - name: cBioPortal | Copy the built portal overlay to replace the default
@@ -18,20 +16,13 @@
   command: >
     cp {{build_importer_dir}}/target/cbioportal-importer-{{cbioportal_importer_version.stdout | replace('version=', '')}}.jar {{webapp_directory}}/cbioportal-importer-{{cbioportal_importer_version.stdout | replace('version=', '')}}.jar
 
-- name: cBioPortal | Download Jetty
-  get_url:
-    dest: '{{jetty_target}}'
-    url: '{{jetty_url}}'
-
 - name: cBioPortal | Write configuration files
   template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }}
   notify:
     - restart service
   with_items:
-    - { src: "cbioportal.xml.j2", dest: "{{webapp_directory}}/cbioportal.xml", mode: '0755' }
     - { src: "cbioportal-import.xml.j2", dest: "{{webapp_directory}}/cbioportal-import.xml", mode: '0755' }
     - { src: "override-web.xml.j2", dest: "{{webapp_directory}}/override-web.xml", mode: '0755' }
-    - { src: "cbioportal.init.j2", dest: "/etc/init.d/{{webapp_service_name}}", mode: '0755' }
     - { src: "cbioportal-webapp.xml.j2", dest: "/tmp/cbioportal-webapp.xml", mode: '0755' }
 
 ## Slightly cunning. cat the file to put the templated content into
@@ -61,25 +52,12 @@
     dest: "{{webapp_directory}}/portal.properties"
     remote_src: yes
 
-# - name: cBioPortal | Patch portal.properties
-#   lineinfile:
-#     dest: "{{build_webapp_dir}}/portal.properties"
-#     regexp: '^db.version\s*=\s*(.*)$'
-#     line: "db.version={{cbioportal_db_version.stdout | replace('version=', '')}}"
-#     state: present
-#     insertafter: EOF
-#     backrefs: no
-#
 - name: cBioPortal | Update the database schema
   shell: >
      yes | python {{build_webapp_dir}}/core/src/main/scripts/migrate_db.py -p {{webapp_directory}}/portal.properties -s {{build_webapp_dir}}/core/src/main/resources/db/migration.sql
-
-- name: cBioPortal | Create user
-  user: name={{webapp_service_user}} comment="{{webapp_service_user}} webapp" state=present
 
 - name: cBioPortal | Assign files to the user
   file: path={{ item.path }} recurse=yes owner={{webapp_service_user}} group=adm mode={{ item.mode }}
   with_items:
     - { path: '{{webapp_log_directory}}', mode: '0750' }
-    - { path: '{{webapp_pid_directory}}', mode: '0750' }
     - { path: '{{webapp_directory}}', mode: '0755' }

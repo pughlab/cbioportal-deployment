@@ -14,7 +14,7 @@
 
 ###
 # chkconfig: 345 20 80
-# description: cBioPortal
+# description: {{webapp_service_name}}
 # processname: java
 #
 # Installation (CentOS):
@@ -41,9 +41,9 @@ APPLICATION_DIR="{{webapp_directory}}"
 # The fat jar containing your application
 APPLICATION_JAR="{{jetty_target}}"
 # The application argument such as -cluster -cluster-host ...
-APPLICATION_ARGS="cbioportal.xml"
+APPLICATION_ARGS="{{webapp_service_name}}.xml"
 # cBioPortal options and system properties (-Dfoo=bar).
-CBIOPORTAL_OPTS=""
+APPLICATION_OPTS=""
 # cBioPortal home
 PORTAL_HOME="{{webapp_directory}}"
 # Java
@@ -74,6 +74,9 @@ echoRed() { echo -e "${red}$1${reset}"; }
 echoGreen() { echo -e "${green}$1${reset}"; }
 echoYellow() { echo -e "${yellow}$1${reset}"; }
 
+## Make sure we export PORTAL_HOME
+export PORTAL_HOME
+
 # Check whether the application is running.
 # The check is pretty simple: open a running pid file and check that the process
 # is alive.
@@ -91,32 +94,32 @@ isrunning() {
 
 start() {
   if isrunning; then
-    echoYellow "cBioPortal is already running"
+    echoYellow "{{webapp_service_name}} is already running"
     return 0
   fi
 
   pushd $APPLICATION_DIR > /dev/null
-  nohup $JAVA $CBIOPORTAL_OPTS -jar $APPLICATION_JAR $APPLICATION_ARGS > $OUT_FILE 2>&1 &
+  nohup $JAVA $APPLICATION_OPTS -jar $APPLICATION_JAR $APPLICATION_ARGS > $OUT_FILE 2>&1 &
   echo $! > ${RUNNING_PID}
   popd > /dev/null
 
   if isrunning; then
-    echoGreen "cBioPortal started"
+    echoGreen "{{webapp_service_name}} started"
     exit 0
   else
-    echoRed "cBioPortal has not started - check log"
+    echoRed "{{webapp_service_name}} has not started - check log"
     exit 3
   fi
 }
 
 restart() {
-  echo "Restarting cBioPortal"
+  echo "Restarting {{webapp_service_name}}"
   stop
   start
 }
 
 stop() {
-  echoYellow "Stopping cBioPortal"
+  echoYellow "Stopping {{webapp_service_name}}"
   if isrunning; then
     kill `cat $RUNNING_PID`
     rm $RUNNING_PID
@@ -125,9 +128,9 @@ stop() {
 
 status() {
   if isrunning; then
-    echoGreen "cBioPortal is running"
+    echoGreen "{{webapp_service_name}} is running"
   else
-    echoRed "cBioPortal is either stopped or inaccessible"
+    echoRed "{{webapp_service_name}} is either stopped or inaccessible"
   fi
 }
 
@@ -146,7 +149,7 @@ stop)
 	stop
 	exit 0
     else
-	echoRed "cBioPortal not running"
+	echoRed "{{webapp_service_name}} not running"
 	exit 3
     fi
 ;;

@@ -18,6 +18,7 @@
     timeout: 600
     owner: '{{webapp_service_user}}'
     group: adm
+  when: enable_oidc
 
 - name: OIDC | Write configuration files
   template: src={{ item.src }} dest={{ item.dest }} mode={{item.mode}} owner={{webapp_service_user}} group=adm
@@ -27,22 +28,26 @@
     - { src: "oidc-webapp.xml.j2", dest: "/tmp/oidc-webapp.xml", mode: '0750' }
     - { src: "oidc-override-web.xml.j2", dest: "{{webapp_directory}}/oidc-override-web.xml", mode: '0644' }
     - { src: "oidc-configuration.xml.j2", dest: "{{webapp_directory}}/oidc-configuration.xml", mode: '0644' }
+  when: enable_oidc
 
 - name: OIDC | Write DB initialization file
   copy: src={{ item.src }} dest={{ item.dest }}
   with_items:
     - { src: "initialize_mysql.sql", dest: "/tmp/initialize_mysql.sql" }
+  when: enable_oidc
 
 - name: OIDC | Create the database for OIDC
   mysql_db:
     name: "{{item}}"
     login_user: root
     login_password: "{{ mysql_root_password }}"
+    login_host: "{{ oidc_database_host }}"
     state: present
     encoding: 'utf8'
     collation: 'utf8_unicode_ci'
   with_items:
     - "{{oidc_database_name}}"
+  when: enable_oidc
 
 - name: OIDC | Add an unprivileged user for the database
   mysql_user:
@@ -56,6 +61,7 @@
     append_privs: yes
   with_items:
     - "{{oidc_database_name}}"
+  when: enable_oidc
 
 - name: OIDC | Initialize the database for OIDC
   mysql_db:
@@ -64,6 +70,8 @@
     target: '/tmp/initialize_mysql.sql'
     login_user: "{{oidc_database_username}}"
     login_password: "{{oidc_database_password}}"
+    login_host: "{{ oidc_database_host }}"
+  when: enable_oidc
 
 ## Slightly cunning. cat the file to put the templated content into
 ## a variable. Then we can write it into the cBioPortal master
@@ -72,6 +80,7 @@
 - name: OIDC | Read the templated configuration
   command: cat /tmp/oidc-webapp.xml
   register: oidc_webapp_xml_data
+  when: enable_oidc
 
 - name: OIDC | Edit the configuration file body
   blockinfile:
@@ -81,6 +90,7 @@
       {{ oidc_webapp_xml_data.stdout }}
   notify:
     - restart service
+  when: enable_oidc
 
 - name: OIDC | Edit the configuration file handler
   blockinfile:
@@ -89,6 +99,7 @@
     block: '<Item><Ref refid="webappOidc"/></Item>'
   notify:
     - restart service
+  when: enable_oidc
 
 - meta: flush_handlers
 
@@ -97,14 +108,21 @@
     delay: 10
     port: 8080
     state: started
+  when: enable_oidc
 
 - name: OIDC | Copy token data
   template: src={{ item.src }} dest={{ item.dest }}
   with_items:
     - { src: "oidc-import.json.j2", dest: "/tmp/oidc-import.json" }
+  when: enable_oidc
 
 - name: OIDC | Log in to the server
   command: "curl --data 'j_username={{oidc_admin_username}}&j_password={{oidc_admin_password}}&submit=Login' -c /tmp/cookies http://localhost:8080/oidc/j_spring_security_check"
+  when: enable_oidc
+
+## This might well fail, but it doesn't really matter if it does, so long as it
+## writes enough to create the client if it doesn't already exist.
 
 - name: OIDC | Write the data to the server when authenticated
-  command: "curl -X POST -d @/tmp/oidc-import.json -H 'Accept: application/json' -H 'Content-type: application/json' -b /tmp/cookies http://localhost:8080/oidc/api/data"
+  command: "curl -X POST -d @/tmp/oidc-import.json -H 'Accept: application/json' -H 'Content-type: application/json' -b /tmp/cookies http://localhost:8080/oidc/api/clients"
+  when: enable_oidc

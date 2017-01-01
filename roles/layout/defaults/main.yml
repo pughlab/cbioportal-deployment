@@ -1,0 +1,6 @@
+---
+webapp_service_name: 'cbioportal'
+webapp_service_user: '{{webapp_service_name}}'
+
+webapp_directory: '/usr/lib/{{webapp_service_name}}'
+webapp_log_directory: '/var/log/{{webapp_service_name}}'

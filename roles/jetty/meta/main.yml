@@ -1,0 +1,4 @@
+---
+dependencies:
+  - {role: 'settings'}
+  - {role: 'layout'}

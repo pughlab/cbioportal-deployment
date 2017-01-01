@@ -9,15 +9,10 @@ cbioportal_overlay_version: 'develop'
 cbioportal_importer_repository: 'https://github.com/pughlab/cbioportal-importer.git'
 cbioportal_importer_version: 'develop'
 
-
 build_webapp_dir: '/root/cbioportal'
 build_overlay_dir: '/root/cbioportal-overlay'
 build_importer_dir: '/root/cbioportal-importer'
 
-webapp_service_name: 'cbioportal'
-
-webapp_directory: '/usr/lib/{{webapp_service_name}}'
-webapp_log_directory: '/var/log/{{webapp_service_name}}'
 webapp_pid_directory: '/var/run/{{webapp_service_name}}'
 
 webapp_service_config: '/etc/default/{{webapp_service_name}}.json'
@@ -25,7 +20,6 @@ webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
 
 webapp_listen_port: 8080
 webapp_external_base: 'https://cbioportal.uhnresearch.ca'
-
 
 default_portal_settings:
   'db.user': "{{mysql_database_user}}"
@@ -36,3 +30,5 @@ default_portal_settings:
   'mycancergenome.show': "false"
 
 portal_settings: {}
+
+authentication_portal_settings: {}

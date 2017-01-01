@@ -1,0 +1,40 @@
+---
+mysql_root_password: '97C8F684B327'
+mysql_application_host: 'host-192-168-111-5.openstacklocal'
+mysql_database_host: 'octane-db'
+
+portal_settings:
+  'mycancergenome.show': "false"
+
+oidc_admin_username: 'stuart'
+oidc_admin_password: '$2a$05$Zweqp6D1/x8hH0VDbHTrWuJiVmcRxGrK3ImO5S53OV7aeTgrwK6Wm'
+
+oidc_ldap_providers:
+  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
+    name: "researchAuthProvider"
+    arguments:
+      - name: domain
+        value: "ads.uhnresearch.ca"
+      - name: url
+        value: "ldap://192.168.198.100"
+  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
+    name: "corporateAuthProvider"
+    arguments:
+      - name: domain
+        value: "uhn.ca"
+      - name: url
+        value: "ldap://142.224.16.52"
+  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
+    name: "rmpAuthProvider"
+    arguments:
+      - name: domain
+        value: "rmpuhn.ca"
+      - name: url
+        value: "ldap://142.224.244.137"
+  - class: 'org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider'
+    name: "partnersAuthProvider"
+    arguments:
+      - name: domain
+        value: "partners.uhn.ca"
+      - name: url
+        value: "ldap://142.224.135.81"
