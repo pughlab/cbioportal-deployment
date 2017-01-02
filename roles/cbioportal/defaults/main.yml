@@ -28,6 +28,7 @@ default_portal_settings:
   'app.name': "cBioPortal"
   'db.connection_string': "jdbc:mysql://{{mysql_database_host}}:3306/{{mysql_database_name}}"
   'mycancergenome.show': "false"
+  'dbconnector': 'jndi'
 
 portal_settings: {}
 
