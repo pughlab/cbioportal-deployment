@@ -1,4 +1,9 @@
 ---
+- name: cBioPortal import | ensure the staging directory exists
+  file:
+    path: "{{remote_staging}}"
+    state: directory
+
 - name: cBioPortal import | clear out old import data
   command: rm -rf "{{remote_staging}}"
 
@@ -15,7 +20,7 @@
 
 - name: cBioPortal import | import the data
   shell: >
-    env PORTAL_HOME={{webapp_directory}} java -jar cbioportal-importer-`cat importer-version`.jar {{remote_staging}} cbioportal-import.xml
+    env PORTAL_HOME={{webapp_directory}} java -cp scripts-`cat build.project.version`.jar -jar cbioportal-importer-`cat build.importer.version`.jar {{remote_staging}} cbioportal-import.xml
     chdir="{{webapp_directory}}"
 
 - name: cBioPortal import | restart the web application

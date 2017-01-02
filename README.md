@@ -32,3 +32,11 @@ The command is then:
 
 This deploys a complete and working cBioPortal. It also contains an import play which can be used
 to add new data to the portal automatically.
+
+### Importing data
+
+You can also use this project to manage importing, using the playbook `import.yml`.
+
+The command is:
+
+    $ ansible-playbook -v -i inventories/virtualbox/hosts.ini --extra-vars="import_directory=..." import.yml

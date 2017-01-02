@@ -1,12 +1,13 @@
 ---
-## The command is then:
-## ansible-playbook -vv -i oicr-inventory.ini --connection=ssh --become-method=sudo --extra-vars=import_directory=/... import.yml
+## The command is:
 
-- hosts: application
+- hosts: all
   tasks:
     - name: 'setup'
       setup:
         filter: '*'
+      tags:
+        - always
 
 - hosts: application
   become: true
