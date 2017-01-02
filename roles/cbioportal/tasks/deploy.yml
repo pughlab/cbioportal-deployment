@@ -52,6 +52,17 @@
     dest: "{{webapp_directory}}/portal.properties"
     remote_src: yes
 
+- name: cBioPortal | Copy the version files
+  copy:
+    src: "/tmp/{{item}}"
+    dest: "{{webapp_directory}}/{{item}}"
+    remote_src: yes
+  with_items:
+    - build.project.version
+    - build.importer.version
+    - build.db.version
+    - build.overlay.version
+
 - name: cBioPortal | Update the database schema
   shell: >
      yes | python {{build_webapp_dir}}/core/src/main/scripts/migrate_db.py -p {{webapp_directory}}/portal.properties -s {{build_webapp_dir}}/core/src/main/resources/db/migration.sql
