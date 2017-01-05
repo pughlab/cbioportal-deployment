@@ -2,4 +2,5 @@
 dependencies:
   - {role: 'layout'}
   - {role: 'java'}
+  - {role: 'initialize'}
   - {role: 'oidc'}

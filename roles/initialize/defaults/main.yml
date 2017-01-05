@@ -1,0 +1,2 @@
+---
+seed_database: 'https://storage.googleapis.com/cbiostorage-1/cbioportal-seed.sql.gz'
