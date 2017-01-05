@@ -9,35 +9,23 @@
   always_run: True
   changed_when: False
 
-- name: Initialize | Download seed data
+- name: Initialize | Download schema and seed data
   get_url:
-    dest: '/tmp/cbioportal-seed.sql.gz'
-    url: '{{ seed_database }}'
+    dest: '/tmp/{{item.name}}'
+    url: '{{ item.url }}'
     timeout: 600
+  with_items: "{{seed_items}}"
   when: cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == ""
-  register: seed_downloaded
-
-- name: Initialize | Rename so we can patch
-  command: "mv /tmp/cbioportal-seed.sql.gz /tmp/cbioportal-seed.original.sql.gz"
-  when: seed_downloaded.changed
-
-- name: Initialize | Patch the seed to use InnoDB and the right encodings
-  shell: >
-    gzip -d -c /tmp/cbioportal-seed.original.sql.gz | sed 's/ENGINE=\(.\)*/ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;/g' - | gzip -c > /tmp/cbioportal-seed.sql.gz
-  when: seed_downloaded.changed
-
-- name: Initialize | Remove the original copy
-  command: "rm /tmp/cbioportal-seed.original.sql.gz"
-  when: seed_downloaded.changed
 
 ## Don't reload if we have data, and if we didn't just download some seed data.
 - name: Initialize | Load seed data
   mysql_db:
     name: "{{mysql_database_name}}"
     state: import
-    target: '/tmp/cbioportal-seed.sql.gz'
+    target: '/tmp/{{item.name}}'
     login_user: "{{mysql_database_user}}"
     login_password: "{{mysql_database_password}}"
     encoding: 'latin1'
     collation: 'latin1_general_ci'
-  when: (cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == "")
+  with_items: "{{seed_items}}"
+  when: cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == ""
