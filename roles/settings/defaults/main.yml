@@ -7,3 +7,14 @@ mysql_database_user: 'cbioportal'
 mysql_database_password: 'cbioportal'
 mysql_test_database_name: 'cgds_test'
 mysql_application_host: 'localhost'
+
+default_portal_settings:
+  'db.user': "{{mysql_database_user}}"
+  'db.password': "{{mysql_database_password}}"
+  'db.host': "{{mysql_database_host}}"
+  'app.name': "cBioPortal"
+  'db.connection_string': "jdbc:mysql://{{mysql_database_host}}:3306/{{mysql_database_name}}"
+  'mycancergenome.show': "false"
+  'dbconnector': 'jndi'
+
+portal_settings: {}

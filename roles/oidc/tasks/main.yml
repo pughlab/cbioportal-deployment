@@ -11,6 +11,10 @@
   with_items:
   - curl
 
+- name: OIDC | Update facts
+  set_fact:
+    default_portal_settings: "{{default_portal_settings | combine(authentication_portal_settings)}}"
+
 - name: OIDC | Download web application
   get_url:
     dest: '{{ webapp_directory }}/openid-connect-server-{{oidc_version}}.war'

@@ -20,16 +20,3 @@ webapp_service_init: '/etc/init.d/{{webapp_service_name}}'
 
 webapp_listen_port: 8080
 webapp_external_base: 'https://cbioportal.uhnresearch.ca'
-
-default_portal_settings:
-  'db.user': "{{mysql_database_user}}"
-  'db.password': "{{mysql_database_password}}"
-  'db.host': "{{mysql_database_host}}"
-  'app.name': "cBioPortal"
-  'db.connection_string': "jdbc:mysql://{{mysql_database_host}}:3306/{{mysql_database_name}}"
-  'mycancergenome.show': "false"
-  'dbconnector': 'jndi'
-
-portal_settings: {}
-
-authentication_portal_settings: {}

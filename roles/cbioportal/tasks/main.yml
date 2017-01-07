@@ -5,6 +5,10 @@
   - git
   - maven
 
+- name: settings
+  debug:
+    var: authentication_portal_settings
+
 - include: 'build_cbioportal.yml'
 - include: 'build_cbioportal_importer.yml'
 - include: 'build_cbioportal_overlay.yml'
