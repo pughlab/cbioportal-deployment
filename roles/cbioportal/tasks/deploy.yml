@@ -6,7 +6,7 @@
 
 - name: cBioPortal | Copy the built portal overlay to replace the default
   command: >
-    cp {{build_overlay_dir}}/target/cbioportal-octane-{{cbioportal_overlay_version.stdout | replace('version=', '')}}.war {{webapp_directory}}/cbioportal-{{cbioportal_version.stdout | replace('version=', '')}}.war
+    cp {{build_overlay_dir}}/target/cbioportal-oidc-overlay-{{cbioportal_overlay_version.stdout | replace('version=', '')}}.war {{webapp_directory}}/cbioportal-{{cbioportal_version.stdout | replace('version=', '')}}.war
 
 - name: cBioPortal | Copy the built scripts jar
   command: >

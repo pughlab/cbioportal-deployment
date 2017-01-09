@@ -1,4 +1,12 @@
-<New id="webapp" class="org.eclipse.jetty.webapp.WebAppContext">
+<New id="staticFileHandler" class="org.eclipse.jetty.server.handler.ResourceHandler">
+  <Set name="directoriesListed">false</Set>
+  <Set name="welcomeFiles">
+    <Array type="java.lang.String"></Array>
+  </Set>
+  <Set name="resourceBase">{{webapp_directory}}/static</Set>
+</New>
+
+<New id="webappContext" class="org.eclipse.jetty.webapp.WebAppContext">
   <Set name="contextPath">/</Set>
 
   <Set name="overrideDescriptor">file://{{webapp_directory}}/override-web.xml</Set>
@@ -32,7 +40,7 @@
   <Call name="addBean">
     <Arg>
       <New class="org.eclipse.jetty.annotations.ServletContainerInitializersStarter">
-        <Arg><Ref refid="webapp" /></Arg>
+        <Arg><Ref refid="webappContext" /></Arg>
       </New>
     </Arg>
     <Arg type="boolean">true</Arg>
@@ -71,14 +79,14 @@
     <Arg>
       <New class="org.eclipse.jetty.webapp.WebAppClassLoader">
         <Arg><Ref refid="serverClassloader" /></Arg>
-        <Arg><Ref refid="webapp" /></Arg>
+        <Arg><Ref refid="webappContext" /></Arg>
       </New>
     </Arg>
   </Call>
 
   <!-- The data source -->
   <New id="ds" class="org.eclipse.jetty.plus.jndi.Resource">
-    <Arg><Ref refid="webapp"/></Arg>
+    <Arg><Ref refid="webappContext"/></Arg>
     <Arg>jdbc/cbioportal</Arg>
     <Arg>
       <New class="org.apache.commons.dbcp.BasicDataSource">
@@ -93,4 +101,13 @@
       </New>
     </Arg>
   </New>
+</New>
+
+<New id="webapp" class="org.eclipse.jetty.server.handler.HandlerCollection">
+  <Set name="handlers">
+    <Array type="org.eclipse.jetty.server.Handler">
+      <Item><Ref refid="staticFileHandler"/></Item>
+      <Item><Ref refid="webappContext"/></Item>
+    </Array>
+  </Set>
 </New>
