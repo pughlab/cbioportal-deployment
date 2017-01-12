@@ -1,5 +1,5 @@
 ---
-seed_database_schema: 'https://raw.githubusercontent.com/cBioPortal/cbioportal/v1.3.1/core/src/main/resources/db/cgds.sql'
+seed_database_schema: 'https://raw.githubusercontent.com/cBioPortal/cbioportal/v1.4.0/core/src/main/resources/db/cgds.sql'
 seed_database_part1: 'https://github.com/cbioportal/datahub/raw/b69c86803c40d543080bf31a645721d06c82d08d/seedDB/seed-cbioportal_no-pdb_hg19.sql.gz'
 seed_database_part2: 'https://github.com/cbioportal/datahub/raw/b69c86803c40d543080bf31a645721d06c82d08d/seedDB/seed-cbioportal_only-pdb.sql.gz'
 

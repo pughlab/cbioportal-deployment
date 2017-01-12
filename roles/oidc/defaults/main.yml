@@ -29,7 +29,7 @@ authentication_portal_settings:
   'authenticate': 'openid-connect'
   'authorization': 'true'
   'oidc.adminSubject': '{{oidc_admin_username}}'
-  'oidc.issuer': "{{webapp_external_base}}/oidc"
+  'oidc.issuer': "{{oidc_config_issuer}}"
   'oidc.clientId': '{{oidc_application_client_id}}'
   'oidc.clientSecret': '{{oidc_application_secret}}'
-  'oidc.redirect': "{{webapp_external_base}}/login"
+  'oidc.redirect': "{{webapp_external_base}}/openid_connect_login"
