@@ -1,4 +1,4 @@
 ---
-jetty_version: '1.0.4'
+jetty_version: '1.0.5'
 jetty_url: 'https://repo1.maven.org/maven2/ca/uhnresearch/pughlab/java-server/{{jetty_version}}/java-server-{{jetty_version}}.jar'
 jetty_target: '{{webapp_directory}}/java-server.jar'
