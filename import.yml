@@ -1,6 +1,4 @@
 ---
-## The command is:
-
 - hosts: all
   tasks:
     - name: 'setup'
