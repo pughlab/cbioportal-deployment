@@ -1,5 +1,9 @@
 <New id="webappOidc" class="org.eclipse.jetty.webapp.WebAppContext">
 
+  <Call name="addSystemClass"><Arg>org.apache.log4j.</Arg></Call>
+  <Call name="addSystemClass"><Arg>org.slf4j.</Arg></Call>
+  <Call name="addSystemClass"><Arg>org.apache.commons.logging.</Arg></Call>
+
   <Set name="overrideDescriptor">file://{{webapp_directory}}/oidc-override-web.xml</Set>
 
   <Set name="contextPath">/oidc</Set>

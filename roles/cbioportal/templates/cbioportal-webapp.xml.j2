@@ -84,6 +84,10 @@
     </Arg>
   </Call>
 
+  <Call name="addSystemClass"><Arg>org.apache.log4j.</Arg></Call>
+  <Call name="addSystemClass"><Arg>org.slf4j.</Arg></Call>
+  <Call name="addSystemClass"><Arg>org.apache.commons.logging.</Arg></Call>
+
   <!-- The data source -->
   <New id="ds" class="org.eclipse.jetty.plus.jndi.Resource">
     <Arg><Ref refid="webappContext"/></Arg>
