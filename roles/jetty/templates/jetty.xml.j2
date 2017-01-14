@@ -82,24 +82,9 @@
   </New>
 
   <Set name="handler">
-    <New id="mdcHandler" class="org.eclipse.jetty.webapp.logging.ContextLogHandler">
+    <New id="mdcHandler" class="ca.uhnresearch.pughlab.tracker.server.httpd.ContextLogHandler">
       <Set name="handler"><Ref refid="rewriteHandler"/></Set>
     </New>
   </Set>
-
-  <Call class="org.eclipse.jetty.util.log.Log" name="getRootLogger">
-    <Call name="setDebugEnabled">
-      <Arg type="boolean">true</Arg>
-    </Call>
-  </Call>
-
-  <Ref refid="DeploymentManager">
-    <Call name="addLifeCycleBinding">
-      <Arg>
-        <New class="org.eclipse.jetty.webapp.logging.CentralizedWebAppLoggingBinding">
-        </New>
-      </Arg>
-    </Call>
-  </Ref>
 
 </Configure>
