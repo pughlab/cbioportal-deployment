@@ -6,8 +6,8 @@ Requires=After=mysql.service       # Requires the mysql service to run first
 ExecStart=/usr/bin/java -jar {{jetty_target}} {{webapp_service_name}}.xml
 Restart=always
 RestartSec=30                       # Restart service after 30 seconds if the service crashes
-StandardOutput=syslog               # Output to syslog
-StandardError=syslog                # Output to syslog
+StandardOutput=journal              # Output to journal
+StandardError=journal               # Output to journal
 SyslogIdentifier={{webapp_service_name}}
 WorkingDirectory={{webapp_directory}}
 User={{webapp_service_user}}
