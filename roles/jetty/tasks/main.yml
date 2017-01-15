@@ -5,12 +5,44 @@
     url: '{{jetty_url}}'
 
 - name: Jetty | Write service configuration files
-  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }}
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
   notify:
     - restart service
   with_items:
     - { src: "jetty.xml.j2", dest: "{{webapp_directory}}/{{webapp_service_name}}.xml", mode: '0755' }
+
+- name: Jetty | Write init.d service file
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  notify:
+    - restart service
+  with_items:
     - { src: "jetty.init.j2", dest: "/etc/init.d/{{webapp_service_name}}", mode: '0755' }
+  when: ansible_service_mgr == 'sysvinit'
+
+- name: Jetty | Write systemd service file
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  notify:
+    - restart service
+  with_items:
+    - { src: "jetty.service.j2", dest: "/etc/systemd/system/{{webapp_service_name}}.service", mode: '0644' }
+  when: ansible_service_mgr == 'systemd'
+
+- name: Jetty | Reload systemd daemons
+  command: systemctl daemon-reload
+  when: ansible_service_mgr == 'systemd'
+
+- name: Jetty | Enable the daemon
+  command: systemctl enable {{webapp_service_name}}.service
+  when: ansible_service_mgr == 'systemd'
 
 - name: Jetty | Assign files to the user
   file: path={{ item.path }} recurse=yes owner={{webapp_service_user}} group=adm mode={{ item.mode }}
