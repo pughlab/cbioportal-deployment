@@ -15,8 +15,10 @@
     url: '{{ item.url }}'
     timeout: 600
   with_items: "{{seed_items}}"
-  when: cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == ""
-
+  when:
+    - cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == ""
+    - item.enabled
+    
 ## Don't reload if we have data, and if we didn't just download some seed data.
 - name: Initialize | Load seed data
   mysql_db:
@@ -28,4 +30,6 @@
     encoding: 'latin1'
     collation: 'latin1_general_ci'
   with_items: "{{seed_items}}"
-  when: cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == ""
+  when:
+    - cosmic_mutation_count.stdout == "0" or cosmic_mutation_count.stdout == ""
+    - item.enabled
