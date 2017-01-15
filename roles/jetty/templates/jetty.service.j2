@@ -9,6 +9,7 @@ RestartSec=30                       # Restart service after 30 seconds if the se
 StandardOutput=syslog               # Output to syslog
 StandardError=syslog                # Output to syslog
 SyslogIdentifier={{webapp_service_name}}
+WorkingDirectory={{webapp_directory}}
 User={{webapp_service_user}}
 
 [Install]
