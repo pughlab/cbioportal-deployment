@@ -1,0 +1,13 @@
+DELETE FROM `authorities`;
+
+DELETE FROM `users`;
+
+{% for item in authorities %}
+INSERT INTO `users` (`EMAIL`, `NAME`, `ENABLED`) VALUES ('{{item.email|replace("'", "''")}}', '{{item.name|replace("'", "''")}}', 1);
+{% endfor %}
+
+{% for item in authorities %}
+{% for study in item.studies %}
+INSERT INTO `authorities` (`EMAIL`, `AUTHORITY`) VALUES ('{{item.email|replace("'", "''")}}', '{{study|replace("'", "''")}}');
+{% endfor %}
+{% endfor %}

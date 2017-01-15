@@ -1,0 +1,10 @@
+---
+- include_vars: "{{inventory_dir}}/authorities/main.yml"
+
+- debug:
+    var: authorities
+
+- name: cBioPortal authorities | write import file
+  template:
+    src: import.sql.j2
+    dest: /tmp/import.sql

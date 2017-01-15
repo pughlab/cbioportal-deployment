@@ -1,0 +1,10 @@
+---
+## This file gets written into an SQL import file and is essentially used
+## to set all the instance permissions
+
+authorities:
+  - name: 'Admin User'
+    email: 'admin@example.com'
+    studies:
+      - STUDY1
+      - STUDY2

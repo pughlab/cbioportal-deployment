@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+    - name: 'setup'
+      setup:
+        filter: '*'
+      tags:
+        - always
+
+- hosts: application
+  become: true
+  roles:
+    - { role: authorities, tags: [ 'authorities' ] }
