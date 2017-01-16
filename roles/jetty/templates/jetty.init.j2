@@ -15,7 +15,7 @@
 ###
 # chkconfig: 345 20 80
 # description: {{webapp_service_name}}
-# processname: java
+# processname: cbioportal
 #
 # Installation (CentOS):
 # copy file to /etc/init.d
@@ -35,131 +35,175 @@
 # service {{webapp_service_name}} status
 #
 ###
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
 
+DESC="{{webapp_service_name}}"
+NAME="{{webapp_service_name}}"
 # The directory in which your application is installed
 APPLICATION_DIR="{{webapp_directory}}"
 # The fat jar containing your application
 APPLICATION_JAR="{{jetty_target}}"
 # The application argument such as -cluster -cluster-host ...
 APPLICATION_ARGS="{{webapp_service_name}}.xml"
-# cBioPortal options and system properties (-Dfoo=bar).
-APPLICATION_OPTS=""
 # cBioPortal home
-PORTAL_HOME="{{webapp_directory}}"
+CWD="{{webapp_directory}}"
+#
+USER="{{webapp_service_user}}"
+GROUP="{{webapp_service_user}}"
+
 # Java
 JAVA=/usr/bin/java
+JVM_ARGS=
+JAR_PATH=$APPLICATION_JAR
+JAVA_ARGS="$JVM_ARGS -jar $JAR_PATH $APPLICATION_ARGS"
 
-# ***********************************************
-OUT_FILE={{webapp_log_directory}}/out.log
-RUNNING_PID={{webapp_pid_directory}}/cbioportal.pid
-# ***********************************************
+PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+
+LOGFILE={{webapp_log_directory}}/out.log
 
 ## Create the {{webapp_pid_directory}} dir if necessary
 ## This is because /var/run on some systems is removed on
 ## boot, so the directory for the pid file might not exist.
 
-if [ ! -d {{webapp_pid_directory}} ]; then
-    mkdir {{webapp_pid_directory}}
-    chmod 0755 {{webapp_pid_directory}}
-    chown {{webapp_service_user}} {{webapp_pid_directory}}
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
+
+# Test that Java is installed
+if [ ! -x "$JAVA" ]; then
+  log_failure_msg "Java executable not found at $JAVA"
+  exit 2
 fi
 
-# colors
-red='\e[0;31m'
-green='\e[0;32m'
-yellow='\e[0;33m'
-reset='\e[0m'
-
-echoRed() { echo -e "${red}$1${reset}"; }
-echoGreen() { echo -e "${green}$1${reset}"; }
-echoYellow() { echo -e "${yellow}$1${reset}"; }
-
-## Make sure we export PORTAL_HOME
-export PORTAL_HOME
-
-# Check whether the application is running.
-# The check is pretty simple: open a running pid file and check that the process
-# is alive.
-isrunning() {
-  # Check for running app
-  if [ -f "$RUNNING_PID" ]; then
-    proc=$(cat $RUNNING_PID);
-    if /bin/ps --pid $proc 1>&2 >/dev/null;
-    then
-      return 0
-    fi
-  fi
-  return 1
+#
+# Function that starts the daemon/service
+#
+do_start()
+{
+  # Return
+  #   0 if daemon has been started
+  #   1 if daemon was already running
+  #   2 if daemon could not be started
+  start-stop-daemon --start \
+    --quiet \
+    --pidfile $PIDFILE \
+    --chdir $CWD \
+    --user $USER \
+    --test \
+    --startas /bin/bash -- -c "exec $JAVA $JAVA_ARGS > $LOGFILE 2>&1" \
+    > /dev/null \
+    || return 1
+  # FIXME: export environment variables here
+  # export PORT=8080
+  start-stop-daemon --start \
+    --quiet \
+    --make-pidfile \
+    --pidfile $PIDFILE \
+    --chdir $CWD \
+    --chuid $USER \
+    --user $USER \
+    --group $GROUP \
+    --chdir $CWD \
+    --background \
+    --startas /bin/bash -- -c "exec $JAVA $JAVA_ARGS > $LOGFILE 2>&1" \
+    || return 2
 }
 
-start() {
-  if isrunning; then
-    echoYellow "{{webapp_service_name}} is already running"
-    return 0
-  fi
-
-  pushd $APPLICATION_DIR > /dev/null
-  nohup $JAVA $APPLICATION_OPTS -jar $APPLICATION_JAR $APPLICATION_ARGS > $OUT_FILE 2>&1 &
-  echo $! > ${RUNNING_PID}
-  popd > /dev/null
-
-  if isrunning; then
-    echoGreen "{{webapp_service_name}} started"
-    exit 0
-  else
-    echoRed "{{webapp_service_name}} has not started - check log"
-    exit 3
-  fi
+#
+# Function that stops the daemon/service
+#
+do_stop()
+{
+  # Return
+  #   0 if daemon has been stopped
+  #   1 if daemon was already stopped
+  #   2 if daemon could not be stopped
+  #   other if a failure occurred
+  start-stop-daemon --stop \
+    --quiet \
+    --user $USER \
+    --pidfile $PIDFILE \
+    --chdir $CWD \
+    --retry=TERM/30/KILL/5 \
+    --startas /bin/bash -- -c "exec $JAVA $JAVA_ARGS > $LOGFILE 2>&1"
+  RETVAL="$?"
+  [ "$RETVAL" = 2 ] && return 2
+  rm -f $PIDFILE
+  return "$RETVAL"
 }
 
-restart() {
-  echo "Restarting {{webapp_service_name}}"
-  stop
-  start
-}
-
-stop() {
-  echoYellow "Stopping {{webapp_service_name}}"
-  if isrunning; then
-    kill `cat $RUNNING_PID`
-    rm $RUNNING_PID
-  fi
-}
-
-status() {
-  if isrunning; then
-    echoGreen "{{webapp_service_name}} is running"
-  else
-    echoRed "{{webapp_service_name}} is either stopped or inaccessible"
-  fi
+#
+# Function that checks if the daemon is running
+#
+do_status()
+{
+  start-stop-daemon \
+    --start \
+    --test \
+    --oknodo \
+    --pidfile $PIDFILE \
+    --chdir $CWD \
+    --user $USER \
+    --startas /bin/bash -- -c "exec $JAVA $JAVA_ARGS > $LOGFILE 2>&1"
 }
 
 case "$1" in
-start)
-    start
-;;
+  start)
+  [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+  do_start
+  STATUS=$?
+  case "$?" in
+    0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+    2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+  esac
+  exit $STATUS
+  ;;
 
-status)
-   status
-   exit 0
-;;
+  stop)
+  [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+  do_stop
+  STATUS=$?
+  case "$?" in
+    0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+    2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+  esac
+  exit $STATUS
+  ;;
 
-stop)
-    if isrunning; then
-	stop
-	exit 0
-    else
-	echoRed "{{webapp_service_name}} not running"
-	exit 3
-    fi
-;;
+  status)
+  do_status
+  STATUS=$?
+  exit $STATUS
+  ;;
 
-restart)
-    stop
-    start
-;;
+  restart|force-reload)
 
-*)
-    echo "Usage: $0 {status|start|stop|restart}"
-    exit 1
+  log_daemon_msg "Restarting $DESC" "$NAME"
+  do_stop
+  STATUS=$?
+  case "$?" in
+    0|1)
+    do_start
+    case "$?" in
+      0) log_end_msg 0 ;;
+      1) log_end_msg 1 ;; # Old process is still running
+      *) log_end_msg 1 ;; # Failed to start
+    esac
+    ;;
+    *)
+    # Failed to stop
+    log_end_msg 1
+    ;;
+  esac
+  exit $STATUS
+  ;;
+  *)
+  echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+  exit 3
+  ;;
 esac
