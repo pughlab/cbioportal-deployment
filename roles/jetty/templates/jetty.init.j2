@@ -95,7 +95,7 @@ do_start()
     --chdir $CWD \
     --user $USER \
     --test \
-    --startas /bin/bash -- -c "exec $JAVA $JAVA_ARGS > $LOGFILE 2>&1" \
+    --startas /bin/bash -- -c "exec env PORTAL_HOME=$CWD $JAVA $JAVA_ARGS > $LOGFILE 2>&1" \
     > /dev/null \
     || return 1
   # FIXME: export environment variables here
@@ -110,7 +110,7 @@ do_start()
     --group $GROUP \
     --chdir $CWD \
     --background \
-    --startas /bin/bash -- -c "exec $JAVA $JAVA_ARGS > $LOGFILE 2>&1" \
+    --startas /bin/bash -- -c "exec env PORTAL_HOME=$CWD $JAVA $JAVA_ARGS > $LOGFILE 2>&1" \
     || return 2
 }
 
@@ -130,7 +130,7 @@ do_stop()
     --pidfile $PIDFILE \
     --chdir $CWD \
     --retry=TERM/30/KILL/5 \
-    --startas /bin/bash -- -c "exec $JAVA $JAVA_ARGS > $LOGFILE 2>&1"
+    --startas /bin/bash -- -c "exec env PORTAL_HOME=$CWD $JAVA $JAVA_ARGS > $LOGFILE 2>&1"
   RETVAL="$?"
   [ "$RETVAL" = 2 ] && return 2
   rm -f $PIDFILE
@@ -149,7 +149,7 @@ do_status()
     --pidfile $PIDFILE \
     --chdir $CWD \
     --user $USER \
-    --startas /bin/bash -- -c "exec $JAVA $JAVA_ARGS > $LOGFILE 2>&1"
+    --startas /bin/bash -- -c "exec env PORTAL_HOME=$CWD $JAVA $JAVA_ARGS > $LOGFILE 2>&1"
 }
 
 case "$1" in

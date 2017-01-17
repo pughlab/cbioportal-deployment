@@ -11,6 +11,7 @@ StandardError=journal               # Output to journal
 SyslogIdentifier={{webapp_service_name}}
 WorkingDirectory={{webapp_directory}}
 User={{webapp_service_user}}
+Environment=PORTAL_HOME={{webapp_directory}}
 
 [Install]
 WantedBy=multi-user.target
