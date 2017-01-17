@@ -6,5 +6,5 @@
 
 - name: cBioPortal authorities | write import file
   template:
-    src: import.sql.j2
-    dest: /tmp/import.sql
+    src: import-authorization.sql.j2
+    dest: /tmp/import-authorization.sql

@@ -8,6 +8,6 @@ INSERT INTO `users` (`EMAIL`, `NAME`, `ENABLED`) VALUES ('{{item.email|replace("
 
 {% for item in authorities %}
 {% for study in item.studies %}
-INSERT INTO `authorities` (`EMAIL`, `AUTHORITY`) VALUES ('{{item.email|replace("'", "''")}}', '{{study|replace("'", "''")}}');
+INSERT INTO `authorities` (`EMAIL`, `AUTHORITY`) VALUES ('{{item.email|replace("'", "''")}}', '{{(default_portal_settings|combine(portal_settings))['app.name']|upper}}:{{study|replace("'", "''")}}');
 {% endfor %}
 {% endfor %}
