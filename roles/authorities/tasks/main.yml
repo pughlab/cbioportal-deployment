@@ -8,3 +8,14 @@
   template:
     src: import-authorization.sql.j2
     dest: /tmp/import-authorization.sql
+
+## Don't reload if we have data, and if we didn't just download some seed data.
+- name: Initialize | Load seed data
+  mysql_db:
+    name: "{{mysql_database_name}}"
+    state: import
+    target: '/tmp/import-authorization.sql'
+    login_user: "{{mysql_database_user}}"
+    login_password: "{{mysql_database_password}}"
+    encoding: 'latin1'
+    collation: 'latin1_general_ci'
