@@ -6,5 +6,4 @@ authorities:
   - name: 'Admin User'
     email: 'admin@example.com'
     studies:
-      - STUDY1
-      - STUDY2
+      - acc_tcga
