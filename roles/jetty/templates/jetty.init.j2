@@ -55,7 +55,7 @@ GROUP="{{webapp_service_user}}"
 JAVA=/usr/bin/java
 JVM_ARGS=
 JAR_PATH=$APPLICATION_JAR
-JAVA_ARGS="$JVM_ARGS -jar $JAR_PATH $APPLICATION_ARGS"
+JAVA_ARGS="$JVM_ARGS -cp {{webapp_directory}}/conf/:$JAR_PATH ca.uhnresearch.pughlab.tracker.server.httpd.EmbeddedJettyServer $APPLICATION_ARGS"
 
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME

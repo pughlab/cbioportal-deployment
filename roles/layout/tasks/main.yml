@@ -14,3 +14,8 @@
   file:
     dest: '{{webapp_log_directory}}'
     state: directory
+
+- name: cBioPortal | Create conf directory
+  file:
+    dest: '{{webapp_directory}}/conf'
+    state: directory
