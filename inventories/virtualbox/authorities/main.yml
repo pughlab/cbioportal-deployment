@@ -1,9 +1,14 @@
 ---
 ## This file gets written into an SQL import file and is essentially used
 ## to set all the instance permissions
+##
+## When the study is:
+##   "all" (lowercase) -- should permit all studies
+##   something uppercase -- is a study name, uppercasified
 
 authorities:
   - name: 'Admin User'
     email: 'admin@example.com'
     studies:
-      - acc_tcga
+      - all
+      - ACC_TCGA
