@@ -2,8 +2,8 @@
 ## Just how many mutations exactly?
 - name: Initialize | Count current mutations
   command: >
-    mysql --user={{mysql_database_user}} --password={{mysql_database_password}} {{mysql_database_name}}
-    --host=localhost --batch --skip-column-names
+    mysql --user={{mysql_database_user}} --password={{mysql_database_password}} --host={{mysql_database_host}} {{mysql_database_name}}
+    --batch --skip-column-names
     --execute="SELECT TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{{mysql_database_name}}' AND TABLE_NAME LIKE 'cosmic_mutation'"
   register: cosmic_mutation_count
   always_run: True
@@ -27,6 +27,7 @@
     target: '/tmp/{{item.name}}'
     login_user: "{{mysql_database_user}}"
     login_password: "{{mysql_database_password}}"
+    login_host: "{{mysql_database_host}}"
     encoding: 'latin1'
     collation: 'latin1_general_ci'
   with_items: "{{seed_items}}"
