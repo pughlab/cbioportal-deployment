@@ -40,33 +40,6 @@
     - { src: "initialize_mysql.sql", dest: "/tmp/initialize_mysql.sql" }
   when: enable_oidc
 
-- name: OIDC | Create the database for OIDC
-  mysql_db:
-    name: "{{item}}"
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    login_host: "{{ oidc_database_host }}"
-    state: present
-    encoding: 'utf8'
-    collation: 'utf8_unicode_ci'
-  with_items:
-    - "{{oidc_database_name}}"
-  when: enable_oidc
-
-- name: OIDC | Add an unprivileged user for the database
-  mysql_user:
-    name: "{{ oidc_database_username }}"
-    password: "{{ oidc_database_password }}"
-    host: "{{ oidc_database_host }}"
-    state: present
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    priv: "{{item}}.*:ALL"
-    append_privs: yes
-  with_items:
-    - "{{oidc_database_name}}"
-  when: enable_oidc
-
 - name: OIDC | Initialize the database for OIDC
   mysql_db:
     name: "{{oidc_database_name}}"

@@ -8,6 +8,12 @@ mysql_database_password: 'cbioportal'
 mysql_test_database_name: 'cgds_test'
 mysql_application_host: 'localhost'
 
+oidc_database_host: '{{mysql_database_host}}'
+oidc_database_port: 3306
+oidc_database_name: 'oidc'
+oidc_database_username: 'oidc'
+oidc_database_password: 'oidc'
+
 default_portal_settings:
   'db.user': "{{mysql_database_user}}"
   'db.password': "{{mysql_database_password}}"

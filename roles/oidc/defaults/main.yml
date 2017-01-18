@@ -4,12 +4,6 @@ oidc_version: '1.1.0-RC2'
 oidc_release: '{{oidc_repository}}/releases/download/{{oidc_version}}'
 oidc_url: '{{oidc_release}}/openid-connect-server-{{oidc_version}}.war'
 
-oidc_database_host: '{{mysql_database_host}}'
-oidc_database_port: 3306
-oidc_database_name: 'oidc'
-oidc_database_username: 'oidc'
-oidc_database_password: 'oidc'
-
 oidc_admin_username: 'admin'
 oidc_admin_password: 'pass'
 oidc_admin_password_bcrypt: '$2a$05$JMcWp/w9v7jCrNI6CqAfOu6BgCH0eX6/X1KAqm8bmHodddlTV9Te6'
