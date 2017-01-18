@@ -3,6 +3,7 @@
   get_url:
     dest: '{{jetty_target}}'
     url: '{{jetty_url}}'
+    force: yes
 
 - name: Jetty | Write service configuration files
   template:
