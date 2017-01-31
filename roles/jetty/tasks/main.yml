@@ -15,6 +15,7 @@
   with_items:
     - { src: "jetty.xml.j2", dest: "{{webapp_directory}}/{{webapp_service_name}}.xml", mode: '0755' }
     - { src: "jetty-logback.xml.j2", dest: "{{webapp_directory}}/conf/logback.xml", mode: '0755' }
+    - { src: "logging.properties.j2", dest: "{{webapp_directory}}/conf/logging.properties", mode: '0755' }
 
 - name: Jetty | Write init.d service file
   template:
