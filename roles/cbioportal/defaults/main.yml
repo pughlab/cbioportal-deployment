@@ -1,6 +1,6 @@
 ---
 cbioportal_repository: 'https://github.com/cBioPortal/cbioportal.git'
-cbioportal_version: 'master'
+cbioportal_version: 'v1.4.1'
 cbioportal_build_options: '-DskipTests'
 
 cbioportal_overlay_repository: 'https://github.com/pughlab/cbioportal-oidc-overlay.git'
