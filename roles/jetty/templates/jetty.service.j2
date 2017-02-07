@@ -3,7 +3,7 @@ Description={{webapp_service_name}}
 Requires=After=mysql.service       # Requires the mysql service to run first
 
 [Service]
-ExecStart=/usr/bin/java -cp {{webapp_directory}}/conf/:{{jetty_target}} ca.uhnresearch.pughlab.tracker.server.httpd.EmbeddedJettyServer {{webapp_service_name}}.xml
+ExecStart=/usr/bin/java -Djetty.home={{webapp_directory}} -cp {{webapp_directory}}/conf/:{{jetty_target}} ca.uhnresearch.pughlab.tracker.server.httpd.EmbeddedJettyServer {{webapp_service_name}}.xml
 Restart=always
 RestartSec=30                       # Restart service after 30 seconds if the service crashes
 StandardOutput=journal              # Output to journal

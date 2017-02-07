@@ -53,7 +53,7 @@ GROUP="{{webapp_service_user}}"
 
 # Java
 JAVA=/usr/bin/java
-JVM_ARGS=
+JVM_ARGS="-Djetty.home={{webapp_directory}}"
 JAR_PATH=$APPLICATION_JAR
 JAVA_ARGS="$JVM_ARGS -cp {{webapp_directory}}/conf/:$JAR_PATH ca.uhnresearch.pughlab.tracker.server.httpd.EmbeddedJettyServer $APPLICATION_ARGS"
 
