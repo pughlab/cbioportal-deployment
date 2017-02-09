@@ -4,10 +4,10 @@ cbioportal_version: 'v1.4.1'
 cbioportal_build_options: '-DskipTests'
 
 cbioportal_overlay_repository: 'https://github.com/pughlab/cbioportal-oidc-overlay.git'
-cbioportal_overlay_version: 'develop'
+cbioportal_overlay_version: '1.4.1'
 
 cbioportal_importer_repository: 'https://github.com/pughlab/cbioportal-importer.git'
-cbioportal_importer_version: 'develop'
+cbioportal_importer_version: '0.2.1'
 
 build_webapp_dir: '/root/cbioportal'
 build_overlay_dir: '/root/cbioportal-overlay'
