@@ -14,6 +14,7 @@
     target: '/tmp/import-authorization.sql'
     login_user: "{{mysql_database_user}}"
     login_password: "{{mysql_database_password}}"
+    login_host: "{{mysql_database_host}}"
     encoding: 'latin1'
     collation: 'latin1_general_ci'
   notify:
