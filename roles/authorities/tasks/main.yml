@@ -5,6 +5,7 @@
   template:
     src: import-authorization.sql.j2
     dest: /tmp/import-authorization.sql
+    force: yes
 
 ## Don't reload if we have data, and if we didn't just download some seed data.
 - name: cBioPortal authorities | Load authorities data
