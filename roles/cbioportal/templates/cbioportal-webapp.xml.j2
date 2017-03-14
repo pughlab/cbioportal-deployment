@@ -50,6 +50,10 @@
     <Arg>{{webapp_directory}}/cbioportal-{{cbioportal_version.stdout | replace('version=', '')}}.war</Arg>
   </Call>
 
+  <Call name="addServerClass">
+    <Arg type="String">org.slf4j.</Arg>
+  </Call>
+
   <!-- Add the JSP initializer -->
   <!--          context.setAttribute("org.eclipse.jetty.containerInitializers", jspInitializers());
    -->
