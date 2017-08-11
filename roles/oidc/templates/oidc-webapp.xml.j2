@@ -45,6 +45,10 @@
     <Arg>{{webapp_directory}}/openid-connect-server-{{oidc_version}}.war</Arg>
   </Call>
 
+  <Call name="addServerClass">
+    <Arg type="String">org.slf4j.</Arg>
+  </Call>
+
   <Call name="setAttribute">
     <Arg>org.eclipse.jetty.containerInitializers</Arg>
     <Arg>
