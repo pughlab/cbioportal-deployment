@@ -1,2 +1,4 @@
 *.retry
 .vault-password
+update_authorities.sh
+add.csv
