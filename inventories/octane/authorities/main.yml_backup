@@ -1,0 +1,1118 @@
+---
+## This file gets written into an SQL import file and is essentially used
+## to set all the instance permissions
+##
+## When the study is:
+##   "all" (lowercase) -- should permit all studies
+##   something uppercase -- is a study name, uppercasified
+
+authorities:
+  - name: 'Trevor Pugh'
+    email: 'trevor.pugh@utoronto.ca'
+    studies:
+      - all
+  - name: 'Dax Torti'
+    email: 'dax.torti@oicr.on.ca'
+    studies:
+      - all
+  - name: 'Alberto Leon'
+    email: 'alberto.Leon@oicr.on.ca'
+    studies:
+      - all
+  - name: 'Justin Cook'
+    email: 'Justin.Cook@oicr.on.ca'
+    studies:
+      - all
+  - name: 'Jenna Eagles'
+    email: 'Jenna.Eagles@oicr.on.ca'
+    studies:
+      - all
+  - name: 'Kayla Marsh'
+    email: 'Kayla.Marsh@oicr.on.ca'
+    studies:
+      - all
+  - name: 'Jonathon Torchia'
+    email: 'Jonathon.Torchia@oicr.on.ca'
+    studies:
+      - all
+  - name: 'Cindy Yang'
+    email: 'sycindy.yang@mail.utoronto.ca'
+    studies:
+      - INSPIRE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Prisni Rath'
+    email: 'prisni.rath@oicr.on.ca'
+    studies:
+      - all
+  - name: 'Lillian Siu'
+    email: 'Lillian.siu@uhn.ca'
+    studies:
+      - all
+  - name: 'Carl Virtanen'
+    email: 'cvirtane@uhnresearch.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Celeste Yu'
+    email: 'celeste.yu@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Stuart Watt'
+    email: 'morungos@gmail.com'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Jeff Bruce'
+    email: 'jbruce@uhnresearch.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Aaron Hansen'
+    email: 'aaron.hansen@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Abha Gupta'
+    email: 'abha.gupta@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Akina Natori'
+    email: 'akina.natori@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Alan Smith'
+    email: 'alan.smith@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Alanna Golden'
+    email: 'alanna.golden@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Albiruni Razak'
+    email: 'albiruni.razak@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Amit Oza'
+    email: 'amit.oza@uhn.ca '
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Amy Prawira'
+    email: 'amy.prawira@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Anna Spreafico'
+    email: 'anna.spreafico@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Anna Marie Mulligan'
+    email: 'annamarie.mulligan@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ayman Al Habeeb'
+    email: 'ayman.alhabeeb@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Blaise Clarke'
+    email: 'blaise.clarke@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Bryan Chan'
+    email: 'bryan.chan@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Brad Wouters'
+    email: 'bwouters@uhnresearch.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Catherine Ho'
+    email: 'catherine.ho@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Chaya Friedman'
+    email: 'chaya.friedman@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Christine Elser'
+    email: 'christine.elser@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Daniel Shepshelovich'
+    email: 'daniel.shepshelovich@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Daniel Yokom'
+    email: 'daniel.yokom@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Daphne Dai'
+    email: 'daphne.dai@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Dave Cescon'
+    email: 'dave.cescon@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+      - CFI400945-001
+      - INSPIRE
+      - REFLECT
+  - name: 'David Hogg'
+    email: 'david.hogg@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'David Hwang'
+    email: 'david.hwang@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'David Warr'
+    email: 'david.warr@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'David Hedley'
+    email: 'dhedley@uhnres.utoronto.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Dianne Chadwick'
+    email: 'dianne.chadwick@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Domen Ribnikar'
+    email: 'domen.ribnikar@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Danny Ghazarian'
+    email: 'Dr.danny.ghazarian@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Eitan Amir'
+    email: 'eitan.amir@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Elena Chizhov'
+    email: 'elena.chizhov@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Elena Elimova'
+    email: 'elena.elimova@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Eric Chen'
+    email: 'Eric.chen@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Faranak Fakhkharian'
+    email: 'faranak.fakhkharian@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Frances Shepherd'
+    email: 'frances.shepherd@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+      - LANS
+  - name: 'Geeta Krishna'
+    email: 'Geeta.krishna@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Geoffrey Liu'
+    email: 'geoffrey.liu@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Grainne O’Kane'
+    email: 'grainne.o''kane@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Hadar Goldvaser'
+    email: 'hadar.goldvaser@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Hal Berman'
+    email: 'hal.berman2@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Hamzeh Albaba'
+    email: 'hamzeh.albaba@uhn.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Hao-Wen Sim'
+    email: 'hao-wen.sim@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ilan Weinreb'
+    email: 'ilan.weinreb@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ilaria Colombo'
+    email: 'ilaria.colombo@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'James Kuo'
+    email: 'james.kuo@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Jennifer Knox'
+    email: 'jennifer.knox@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Jeremy Lewin'
+    email: 'jeremy.lewin@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Jeremy Sturgeon'
+    email: 'jeremy.sturgeon@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Josee-Lyne Ethier'
+    email: 'josee-lyne.ethier@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ken Aldape'
+    email: 'ken.aldape@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Kyaw Aung'
+    email: 'kyaw.aung@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Lailah Ahmed'
+    email: 'Lailah.ahmed@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Les Levin'
+    email: 'les.levin@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Luisa Bonilla'
+    email: 'luisa.bonilla@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Marcus Butler'
+    email: 'marcus.butler@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Mariya Bakalets'
+    email: 'mariya.bakalets@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Marjan Rouzbahman'
+    email: 'marjan.rouzbahman@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Mark Doherty'
+    email: 'Mark.doherty@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ming Tsao'
+    email: 'ming.tsao@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+      - LANS
+      - LACEBIO
+  - name: 'Monika Krzyzanowska'
+    email: 'monika.krzyzanowska@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Mor Moskovitz'
+    email: 'mor.moskovitz@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+      - LANS
+  - name: 'Muralidharan Chllamma'
+    email: 'muralidharan.chllamma@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Natalie Stickle'
+    email: 'Natalie.Stickle@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Natasha Leighl'
+    email: 'natasha.leighl@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Nazanin Fallah-Rad'
+    email: 'nazanin.fallah-rad@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Neesha Dhani'
+    email: 'neesha.dhani@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ozgur Mete'
+    email: 'ozgur.mete2@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Patricia Shaw'
+    email: 'patricia.shaw@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Penelope Bradbury'
+    email: 'penelope.bradbury@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Philippe Bedard'
+    email: 'Philippe.bedard@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Prabal Rana'
+    email: 'prabal.rana@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Raymond Jang'
+    email: 'raymond.jang@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Raymond Kim'
+    email: 'raymond.kim@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Rebecca Prince'
+    email: 'rebecca.prince@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ronald Feld'
+    email: 'ronald.feld@uhn.ca '
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Samer Salah'
+    email: 'samer.salah@uhn.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Sara Soldera'
+    email: 'sara.soldera@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Srikala Sridhar'
+    email: 'srikala.sridhar@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Stefano Serra'
+    email: 'stefano.serra@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Stephanie L’Heureux'
+    email: 'stephanie.lheureux@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Sunu Cyriac'
+    email: 'sunu.cyriac@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Suzanne Kamel-Reid'
+    email: 'Suzanne.Kamel-Reid@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Theodorus Van Der Kwast'
+    email: 'theodorus.vanderkwast@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Tong Zhang'
+    email: 'tong.zhang@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Tracy Stockley'
+    email: 'tracy.stockley@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Tristan Barnes'
+    email: 'tristan.barnes@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Vanessa Speers'
+    email: 'vanessa.speers@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Victoria Mandilaras'
+    email: 'victoria.mandilaras@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Warren Mason'
+    email: 'warren.mason@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Neil Winegarden'
+    email: 'winegard@uhnresearch.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Yada Kanjanapan'
+    email: 'yada.kanjanapan@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Yanshuo Cao'
+    email: 'yanshuo.cao@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Yeh Chen Lee'
+    email: 'yehchen.lee@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'John Bartlett'
+    email: 'john.bartlett@oicr.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Andrew Robinson'
+    email: 'robinsa4@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Bryan Lo'
+    email: 'brlo@eorla.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+      - MERCASO
+  - name: 'Gareth Palidwor'
+    email: 'gpalidwor@ohri.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Elina Iordanidi'
+    email: 'eiordanidi@ohri.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Helen Chow'
+    email: 'helen.chow@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Stephen Welch'
+    email: 'stephen.welch@lhsc.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Chris Howlett'
+    email: 'christopher.howlett@lhsc.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Bekim Sadikovic'
+    email: 'bekim.sadikovic@lhsc.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Alan Stuart'
+    email: 'alan.stuart@lhsc.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Lee-Anne Pickard'
+    email: 'leeanne.pickard@lhsc.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ibrahim AlGorashi'
+    email: 'ibrahim.algorashi@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Katherine Pisters'
+    email: 'katherine.pisters@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Samanta Del Rossi'
+    email: 'samanta.delrossi@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Eric Plackmann'
+    email: 'eric.plackmann@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Susie Tan'
+    email: 'susie.tan@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Doreen Ezeife'
+    email: 'doreen.ezeife@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Hadas Sorotsky'
+    email: 'hadas.sorotsky@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+      - LANS
+  - name: 'Josh Morganstein'
+    email: 'brendon.joshmorganstein@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Jessica Ferguson'
+    email: 'fergusj2@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Carrie Hartman'
+    email: 'hartmanc@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Meghan McKay'
+    email: 'mckaym4@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'April Rose'
+    email: 'april.rose@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Esmail Al-ezzie'
+    email: 'esmail.al-ezzie@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ana Lohmann'
+    email: 'ana.lohmann@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Rosemarylin Or'
+    email: 'rosemarylin.or@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Navya Kalidindi'
+    email: 'navya.kalidindi@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Charles Lim'
+    email: 'charles.lim@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Di (Maria) Jiang'
+    email: 'di.jiang@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Morgan Black'
+    email: 'morgan.black@lhsc.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Lincoln Stein'
+    email: 'lincoln.stein@gmail.com'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Peter Sabatini'
+    email: 'peter.sabatini@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Vikaash Kumar'
+    email: 'vikaash.kumar@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Sean Davidson'
+    email: 'sean.davidson@uhnresearch.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Anton Sukhovatkin'
+    email: 'anton.sukhovatkin@rmp.uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Bruno Hedman'
+    email: 'bruno.hedman@rmp.uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Mickey Ng'
+    email: 'mickey.ng@rmp.uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'James Kelley'
+    email: 'james.kelley@rmp.uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Kevin Wang'
+    email: 'kevin.wang@rmp.uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Alisar Alhajj'
+    email: 'alalhajj@ohri.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Swati Garg'
+    email: 'swati.garg@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Derek Jonker'
+    email: 'djonker@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Rachel Goodwin'
+    email: 'rgoodwin@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Christine Cripps'
+    email: 'ccripps@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Sandeep Sehdev'
+    email: 'ssehdev@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Michael Vickers'
+    email: 'mvickers@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Tim Asmis'
+    email: 'tiasmis@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Xinni Song'
+    email: 'xsong@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Michael Ong'
+    email: 'mong@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'John Hilton'
+    email: 'jfhilton@toh.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Tara Baetz'
+    email: 'tbaetz@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Mihaela Mates'
+    email: 'matesm@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Anna Tomiak'
+    email: 'atomiak@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Nazid Hammad'
+    email: 'hammadn@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Richard Gregg'
+    email: 'dgregg@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'James Biagi'
+    email: 'jbiagi@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Christopher Booth'
+    email: 'boothc@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Michael Cabanero'
+    email: 'Michael.Cabanero@uhnresearch.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+      - LANS
+  - name: 'Mark Vinderine'
+    email: 'Mark.Vinderine@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+      - LANS
+  - name: 'Kiran Virik'
+    email: 'virikk@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Angel Zhou'
+    email: 'zhoua1@kgh.kari.net'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Rob Denroche'
+    email: 'rob.denroche@oicr.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Julie Wilson'
+    email: 'julie.wilson@oicr.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Heather Cole'
+    email: 'Heather.Cole@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Jessica Weiss'
+    email: 'Jessica.Weiss@uhnresearch.ca'
+    studies:
+      - LANS
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Melania Pintilie'
+    email: 'Melania.Pintilie@uhnresearch.ca'
+    studies:
+      - LANS
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Rachel Kelly'
+    email: 'Rachel.Kelly@oicr.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Ilinca Lungu'
+    email: 'Ilinca.Lungu@oicr.on.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Vibha Raghavan'
+    email: 'Vibha.Raghavan@uhnresearch.ca'
+    studies:
+      - LACEBIO
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Quan Li'
+    email: 'Quan.Li@uhnresearch.ca'
+    studies:
+      - LACEBIO
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Natalie Wright'
+    email: 'nawright@toh.ca'
+    studies:
+      - MERCASO
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Johanne Weberpals'
+    email: 'jweberpals@toh.ca'
+    studies:
+      - MERCASO
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Sarah Maritan'
+    email: '11sm161@queensu.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Gita Bhat'
+    email: 'Gita.Bhat@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Gita Bhat'
+    email: 'livewire841@gmail.com'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Daria Grafodatskaya'
+    email: 'grafodatd@hhsc.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Elizabeth McCready'
+    email: 'mccready@hhsc.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Eoghan Malone'
+    email: 'eoghan.malone@uhn.ca'
+    studies:
+      - OCTANE
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Rod Bremner'
+    email: 'bremner@lunenfeld.ca'
+    studies:
+      - OCTANE-PM
+      - msk_impact_2017
+      - COMPACT
+  - name: 'Filippos Peidis'
+    email: 'peidis@lunenfeld.ca'
+    studies:
+      - OCTANE-PM
+      - msk_impact_2017
+      - COMPACT
